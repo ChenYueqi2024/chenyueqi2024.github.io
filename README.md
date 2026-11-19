@@ -33,7 +33,7 @@ Yueqi 的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部�
 
 - [视角游乐场](https://chenyueqi2024.github.io/viewpoint-playground/)：v0.3 双目几何实验，含模拟画面、挑战、可展开知识与论文引用。
 - [多视角数据体检](https://chenyueqi2024.github.io/multiview-check/)：v0.2 浏览器内选择图像和清单检查，不上传材料；保留 Python 本地工具。
-- [公开之前](https://chenyueqi2024.github.io/before-public/)：v0.2 浏览器内检查所选文件的敏感词与图片 EXIF GPS，不上传数据；保留本地 Git 暂存区和历史检查。
+- [公开之前](https://chenyueqi2024.github.io/before-public/)：v0.3 浏览器内检查 Word、PDF、文本与图片 EXIF GPS，明确弹出结果；提供 push 前隐私检查 skill，保留本地 Git 工具。
 
 ## 部署
 
