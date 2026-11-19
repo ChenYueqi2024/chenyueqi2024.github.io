@@ -1,6 +1,6 @@
 # Yueqi Chen · Personal Website
 
-Yueqi的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部署于 GitHub Pages。
+Yueqi 的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部署于 GitHub Pages。
 
 - [选择版本](https://chenyueqi2024.github.io/)
 - [成长手记 / 严肃版](https://chenyueqi2024.github.io/academic/)
@@ -13,7 +13,7 @@ Yueqi的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部署
 - `life/index.html`：故事、项目演示、荣誉筛选与联系入口。
 - `styles.css`：响应式样式、打印样式与减少动画支持。
 - `script.js`：移动导航、项目对比、荣誉筛选、随机故事。
-- `assets/`：经选择的个人照片与公开项目截图。
+- `assets/`：原创卡通头像与公开项目截图。
 
 无构建步骤，无外部字体、统计追踪或运行时第三方依赖。禁用 JavaScript 时仍可阅读内容、使用链接和导航。
 
@@ -25,7 +25,7 @@ Yueqi的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部署
 
 更新经历时同步修改两个版本。排名、志愿时长和 PR 状态保留统计口径与日期；团队竞赛明确标注团队获奖。论文状态只展示“有一篇 CVPR 2027 在投”，不发布论文内容。
 
-证书原件、成绩单、申请表、研究稿件及私人核对资料均不属于本仓库。项目截图来自本人已公开仓库；个人照片与经历不授予第三方再利用许可。
+证书原件、成绩单、申请表、研究稿件及私人核对资料均不属于本仓库。项目截图来自本人已公开仓库；个人经历不授予第三方再利用许可。
 
 ## 部署
 
