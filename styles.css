@@ -101,6 +101,18 @@ hr{height:1px;border:0;background:var(--line);margin:32px 0}
 .project-pair{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px}
 .compact-project{padding-top:28px;border-top:1px solid #cad6e2}
 .compact-project>p:not(.project-subtitle){color:var(--muted)}
+.mini-projects{margin-top:64px}
+.mini-projects>h3{font-size:1.65rem}
+.mini-project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:28px}
+.mini-project{display:flex;flex-direction:column;padding:28px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius)}
+.mini-project h4{font-size:1.35rem;line-height:1.4;margin:0 0 18px;letter-spacing:-.03em}
+.mini-project>p{font-size:.925rem;color:var(--muted)}
+.mini-project-links{display:flex;gap:20px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.life .mini-project:nth-child(1){background:#eaf0ff}
+.life .mini-project:nth-child(2){background:#e7f3ed}
+.life .mini-project:nth-child(3){background:#f1eaf8}
+.life .mini-project .mini-project-subtitle{font-weight:650;color:var(--ink)}
+@media(max-width:900px){.mini-project-grid{grid-template-columns:1fr}.mini-projects{margin-top:44px}}
 .contributions{margin-top:64px;padding-top:40px;border-top:1px solid #cad6e2}
 .contributions>p{color:var(--muted)}
 .pr-list{list-style:none;margin:24px 0 0;padding:0}

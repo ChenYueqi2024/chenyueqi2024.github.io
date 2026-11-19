@@ -27,6 +27,14 @@ Yueqi 的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部�
 
 证书原件、成绩单、申请表、研究稿件及私人核对资料均不属于本仓库。项目截图来自本人已公开仓库；个人经历不授予第三方再利用许可。
 
+## 小项目入口
+
+两个版本同步展示以下 v0.1 基础版，源码各自维护在独立仓库：
+
+- [视角游乐场](https://chenyueqi2024.github.io/viewpoint-playground/)：浏览器内的双目几何互动实验。
+- [多视角数据体检](https://chenyueqi2024.github.io/multiview-check/)：本地数据自洽性检查，网页提供合成报告和样例。
+- [公开之前](https://chenyueqi2024.github.io/before-public/)：本地发布前隐私检查，网页提供合成报告和样例。
+
 ## 部署
 
 GitHub Pages 使用 `main` 分支根目录，`.nojekyll` 保证原样发布静态文件。推送更新后等待 Pages 部署完成。
