@@ -29,9 +29,9 @@ Yueqi 的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部�
 
 ## 小项目入口
 
-两个版本同步展示以下 v0.1 基础版，源码各自维护在独立仓库：
+两个版本同步展示以下小项目，源码各自维护在独立仓库：
 
-- [视角游乐场](https://chenyueqi2024.github.io/viewpoint-playground/)：浏览器内的双目几何互动实验。
+- [视角游乐场](https://chenyueqi2024.github.io/viewpoint-playground/)：v0.2 浏览器内双目几何实验，含模拟画面、连拍与三个挑战。
 - [多视角数据体检](https://chenyueqi2024.github.io/multiview-check/)：本地数据自洽性检查，网页提供合成报告和样例。
 - [公开之前](https://chenyueqi2024.github.io/before-public/)：本地发布前隐私检查，网页提供合成报告和样例。
 
