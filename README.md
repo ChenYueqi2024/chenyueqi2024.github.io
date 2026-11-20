@@ -31,9 +31,9 @@ Yueqi 的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部�
 
 两个版本同步展示以下小项目，源码各自维护在独立仓库：
 
-- [视角游乐场](https://chenyueqi2024.github.io/viewpoint-playground/)：v0.3 双目几何实验，含模拟画面、挑战、可展开知识与论文引用。
+- [视角游乐场](https://chenyueqi2024.github.io/viewpoint-playground/)：v0.4 双目几何实验，固定观测站与画面／指标联动，新增三维视觉与生成研究图文导览。
 - [多视角数据体检](https://chenyueqi2024.github.io/multiview-check/)：v0.2 浏览器内选择图像和清单检查，不上传材料；保留 Python 本地工具。
-- [公开之前](https://chenyueqi2024.github.io/before-public/)：v0.3 浏览器内检查 Word、PDF、文本与图片 EXIF GPS，明确弹出结果；提供 push 前隐私检查 skill，保留本地 Git 工具。
+- [公开之前](https://chenyueqi2024.github.io/before-public/)：v0.4 浏览器与 skill 支持图片、扫描 PDF 的本地中英文 OCR 及自动敏感候选；保留 Word、文本、EXIF GPS 与 Git 检查，明确提示未完成范围。
 
 ## 部署
 
