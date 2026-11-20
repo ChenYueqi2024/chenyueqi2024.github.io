@@ -31,6 +31,8 @@ Yueqi 的个人网站，以原生 HTML、CSS 和少量 JavaScript 构建，部�
 
 两个版本同步展示以下小项目，源码各自维护在独立仓库：
 
+每张项目卡片包含实际界面预览与简短说明，图片以 WebP 保存并延迟加载，手机端单列完整显示。检查工具的预览使用合成材料；更新界面后可替换 `assets/*-preview.webp`，同步维护两版图片说明。
+
 - [Model Mechanics](https://chenyueqi2024.github.io/model-mechanics/)：面向机器学习与深度学习初学者的 19 个交互实验，涵盖语言、视觉、训练与决策。
 - [视角游乐场](https://chenyueqi2024.github.io/viewpoint-playground/)：v0.4 双目几何实验，固定观测站与画面／指标联动，新增三维视觉与生成研究图文导览。
 - [多视角数据体检](https://chenyueqi2024.github.io/multiview-check/)：v0.2 浏览器内选择图像和清单检查，不上传材料；保留 Python 本地工具。
