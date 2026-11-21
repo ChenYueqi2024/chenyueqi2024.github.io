@@ -25,7 +25,7 @@
       <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a></nav>
       <div class="search" hidden>
         <label for="experiment-query">搜索实验或关键词</label>
-        <input id="experiment-query" type="search" placeholder="例如 SLAM、置信度、RAG">
+        <input id="experiment-query" type="search" placeholder="如 SLAM、RAG、UMAP">
         <p id="search-status" role="status"></p>
       </div>
     </div>
@@ -57,6 +57,12 @@
           <p>比较幅度与相位交换后的图像，再让相位相关找回平移。重复条纹会给出多个候选。</p>
           <ul class="links"><li><a href="/model-evidence-labs/fourier/">交换频谱</a></li><li><a href="/model-evidence-labs/fourier/#registration-title">试做图像配准</a></li><li><a href="/model-evidence-labs/fourier/#research">从配准到频域学习</a></li></ul>
         </article>
+        <article class="tile" data-search="三维重建 缺视角 视觉外壳 visual hull 体素 IoU RegNeRF">
+          <p class="topic">视觉外壳</p>
+          <h3>轮廓相同，形状就相同吗？</h3>
+          <p>让多台相机拍同一个物体，再用轮廓削掉不可能的空间。切开重建结果，核对它有没有恢复凹槽。</p>
+          <ul class="links"><li><a href="hull/">重建并切开剖面</a></li><li><a href="hull/#research">原理与研究练习</a></li></ul>
+        </article>
       </div>
     </section>
     <section class="chapter" id="reliability" aria-labelledby="reliability-title">
@@ -73,6 +79,18 @@
           <h3>九成把握，真的能对九成吗？</h3>
           <p>用上一站的分类器比较预测置信度与实际正确率。然后调整自动采用阈值，检查哪些样本需要转人工。</p>
           <ul class="links"><li><a href="/model-evidence-labs/calibration/">试做温度校准</a></li><li><a href="/model-evidence-labs/calibration/#threshold-title">按组看复核风险</a></li><li><a href="/model-evidence-labs/calibration/#research">读风险与共形预测</a></li></ul>
+        </article>
+        <article class="tile" data-search="主动学习 标注 数据效率 不确定性 Core-Set 样本 训练">
+          <p class="topic">主动学习</p>
+          <h3>只够标 20 张图，先标哪些？</h3>
+          <p>用相同预算比较随机、最不确定、最远优先。加入边界旁的模糊样本，观察预算流向与测试准确率。</p>
+          <ul class="links"><li><a href="active-learning/">分配标注预算</a></li><li><a href="active-learning/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="向量 向量检索 embedding PCA t-SNE UMAP Patch Lens 可视化 降维 最近邻">
+          <p class="topic">降维与向量</p>
+          <h3>二维图上挨得近，原向量也近吗？</h3>
+          <p>固定图块描述，切换 PCA、t-SNE 和 UMAP。点选一个图块，比较原空间与二维图的最近邻。</p>
+          <ul class="links"><li><a href="embeddings/">比较三个投影</a></li><li><a href="embeddings/#research">原理与研究练习</a></li></ul>
         </article>
       </div>
     </section>
@@ -91,6 +109,12 @@
           <p>Model Mechanics 的 19 个实验，从 BPE 和语言 Transformer 走到 Patch Lens、ViT、训练与泛化，再到 MoE、GNN 和强化学习。</p>
           <ul class="links"><li><a href="/model-mechanics/index.html">浏览 19 个实验</a></li><li><a href="/model-mechanics/retrieval/">做图文检索</a></li></ul>
         </article>
+        <article class="tile" data-search="RAG 表格 数值 推理 检索 引用 FinQA T2-RAGBench 缺证据">
+          <p class="topic">表格 RAG</p>
+          <h3>RAG 找到表格，能算对吗？</h3>
+          <p>从报告中保留或移除年份行、表头和脚注，核对答案用的是实付还是预算，单位与算式是否正确。</p>
+          <ul class="links"><li><a href="table-rag/">沿证据复算</a></li><li><a href="table-rag/#research">原理与研究练习</a></li></ul>
+        </article>
       </div>
     </section>
     <section class="chapter" id="practice" aria-labelledby="practice-title">
@@ -101,6 +125,12 @@
           <h3>为什么重建之前要先检查数据？</h3>
           <p>先读一份故意混入异常的示例报告，再检查自己的图像尺寸、相机内参、位姿和时间戳。</p>
           <ul class="links"><li><a href="/multiview-check/demo-report.html">查看异常报告</a></li><li><a href="/multiview-check/">检查自己的数据</a></li></ul>
+        </article>
+        <article class="tile" data-search="数据泄漏 复现 训练集 测试集 评估 近重复 分组 泄漏">
+          <p class="topic">评估协议</p>
+          <h3>同一批照片，换一种划分会怎样？</h3>
+          <p>用近邻分类器比较按帧随机与整段留出。点开它借用的训练帧，核对测试中有没有熟悉场景。</p>
+          <ul class="links"><li><a href="leakage/">对照两种划分</a></li><li><a href="leakage/#research">原理与研究练习</a></li></ul>
         </article>
       </div>
     </section>
