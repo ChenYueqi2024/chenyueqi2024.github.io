@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="把有噪声的运动测量一帧帧接起来，再告诉系统两次来过同一个地点。看看这条新约束怎样改变历史轨迹。"><title>相机回到原地，中途的路为什么变了？ · 从现象到研究</title><link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><script type="module" src="app.mjs"></script></head>
+<body class="lab"><header class="top"><a class="wordmark" href="../">从现象到研究<span>.</span></a><a href="#research">应用与研究练习</a></header><main>
+<section class="intro"><h1>相机回到原地，中途的路为什么变了？</h1><p class="lead">把有噪声的运动测量一帧帧接起来，再告诉系统两次来过同一个地点。看看这条新约束怎样改变历史轨迹。</p></section>
+<noscript><p class="readout">互动计算需要 JavaScript。下方的原理和论文可以直接阅读。</p></noscript>
+<section class="lab-work"><h2>给轨迹加一条回环</h2><p>灰虚线是真实轨迹，橙色是逐帧累加，绿色是优化结果。细虚线连接同一帧的前后位置，紫线表示回环约束。图中只有二维平移，起点固定在原点。</p>
+<div class="lab-controls"><label for="frames">已加入的运动测量 <output id="frame-value">28</output></label><input id="frames" type="range" min="2" max="28" value="28"><label>噪声种子 <select id="seed"><option value="64">64</option><option value="199">199</option><option value="251">251</option></select></label></div>
+<div class="lab-controls"><button id="correct" class="primary">试正确回环</button><button id="wrong">试错误回环</button><button id="none">移除回环</button></div>
+<div class="lab-controls"><label>第一帧 <select id="node-a"></select></label><label>第二帧 <select id="node-b"></select></label><label><input id="loop-enabled" type="checkbox"> 约束两帧到同一位置</label><label for="weight">回环权重 <output id="weight-value"></output></label><input id="weight" type="range" min="0" max="36" value="15"></div>
+<figure class="chart-box"><figcaption id="pick-note">可以在图中依次点击两个橙色节点，也可以用上方下拉框。</figcaption><canvas id="graph" width="660" height="430" role="img" aria-label="真实、逐帧累加和优化后的轨迹图"></canvas></figure>
+<p id="graph-score" class="readout" role="status"></p></section>
+<section id="research" class="lab-research"><h2>从实验到研究</h2><h3>为什么每一帧都会动？</h3><p>优化最小化相邻两帧的位移与实际测量的差，再用一个额外边惩罚指定两帧的位置差。调整某个节点会影响它前后两段约束，所以全局联合调整会重新分配误差。回环权重为 0 时回环不参与求解。</p><h3>实际 SLAM 怎样判断是不是同一个地方？</h3><p>ORB-SLAM 先检索候选地点，再做几何核验。真实位姿图要同时处理旋转与平移，经常需要非线性优化、鲁棒损失及重定位。本站已知运动使用统一坐标，因此位置求解简化为线性最小二乘。</p><h3>可复现课题</h3><p>固定同一条轨迹和噪声种子，分别加真回环与错误回环，扫描权重。测量三维系统对应的轨迹误差时，同时核对基准对齐、回环几何一致性和历史哪个区间被改动最大。</p><p><a href="https://ais.informatik.uni-freiburg.de/publications/papers/kuemmerle11icra.pdf">Kümmerle 等 · g2o</a> · <a href="https://arxiv.org/abs/1502.00956">Mur-Artal 等 · ORB-SLAM</a> · <a href="/trajectory-replay/#methods">原轨迹回放与位姿导读</a></p></section>
+</main><footer><a href="../">返回实验目录</a><a href="/trajectory-replay/">回到相机轨迹回放器</a></footer></body></html>

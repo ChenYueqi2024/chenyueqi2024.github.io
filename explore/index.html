@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Yueqi 的交互实验目录。从双目视觉、轨迹误差和傅里叶变换，到模型置信度与 RAG，找到动手实验、实际应用和研究导读。">
+  <meta name="description" content="Yueqi 的交互实验目录。从双目视觉、轨迹误差和傅里叶变换，到扩散模型、配对评估与 RAG，找到动手实验、实际应用和研究导读。">
   <meta name="theme-color" content="#eef3ef">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://chenyueqi2024.github.io/explore/">
@@ -22,7 +22,7 @@
       </div>
     </section>
     <div class="directory-tools">
-      <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a></nav>
+      <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习、生成与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a></nav>
       <div class="search" hidden>
         <label for="experiment-query">搜索实验或关键词</label>
         <input id="experiment-query" type="search" placeholder="如 SLAM、RAG、UMAP">
@@ -63,10 +63,16 @@
           <p>让多台相机拍同一个物体，再用轮廓削掉不可能的空间。切开重建结果，核对它有没有恢复凹槽。</p>
           <ul class="links"><li><a href="hull/">重建并切开剖面</a></li><li><a href="hull/#research">原理与研究练习</a></li></ul>
         </article>
+        <article class="tile" data-search="SLAM 位姿图 回环 图优化 pose graph g2o ORB-SLAM 轨迹 漂移">
+          <p class="topic">回环与位姿图</p>
+          <h3>相机回到原地，中途的路为什么变了？</h3>
+          <p>逐帧累加含噪运动，再加入正确或错误的回环，观察整条路线怎样重新分配误差。</p>
+          <ul class="links"><li><a href="pose-graph/">试做回环优化</a></li><li><a href="pose-graph/#research">原理与研究练习</a></li></ul>
+        </article>
       </div>
     </section>
     <section class="chapter" id="reliability" aria-labelledby="reliability-title">
-      <div class="chapter-heading"><h2 id="reliability-title">模型学习与可靠性</h2><p>让同一个分类器在不同环境里答题，检查它依据什么判断、给出的把握能不能信。</p></div>
+      <div class="chapter-heading"><h2 id="reliability-title">模型学习、生成与可靠性</h2><p>让同一个分类器在不同环境里答题，检查它依据什么判断、给出的把握能不能信。</p></div>
       <div class="shelf">
         <article class="tile" data-search="捷径学习 CNN Waterbirds Group DRO DFR 稳健性 偏差 泛化 VLM 域迁移">
           <p class="topic">数据偏差</p>
@@ -92,6 +98,12 @@
           <p>固定图块描述，切换 PCA、t-SNE 和 UMAP。点选一个图块，比较原空间与二维图的最近邻。</p>
           <ul class="links"><li><a href="embeddings/">比较三个投影</a></li><li><a href="embeddings/#research">原理与研究练习</a></li></ul>
         </article>
+        <article class="tile" data-search="扩散 生成模型 DDPM score guidance 概率流 去噪 扩散模型 采样 引导">
+          <p class="topic">扩散模型</p>
+          <h3>一团噪声，怎样长出结构？</h3>
+          <p>拖动加噪与去噪时间轴。固定起始随机噪声，比较不同采样步数和条件引导强度下的结果。</p>
+          <ul class="links"><li><a href="diffusion/">回放扩散过程</a></li><li><a href="diffusion/#research">原理与研究练习</a></li></ul>
+        </article>
       </div>
     </section>
     <section class="chapter" id="language" aria-labelledby="language-title">
@@ -115,6 +127,12 @@
           <p>从报告中保留或移除年份行、表头和脚注，核对答案用的是实付还是预算，单位与算式是否正确。</p>
           <ul class="links"><li><a href="table-rag/">沿证据复算</a></li><li><a href="table-rag/#research">原理与研究练习</a></li></ul>
         </article>
+        <article class="tile" data-search="RAG ANN HNSW 向量检索 近似近邻 向量索引 召回 证据 索引">
+          <p class="topic">向量索引</p>
+          <h3>少算几次距离，会漏掉什么？</h3>
+          <p>在近邻图中花有限预算寻找候选，与全量扫描的精确前十比较，再检查 RAG 所需的证据是否还在。</p>
+          <ul class="links"><li><a href="vector-search/">比较搜索预算</a></li><li><a href="vector-search/#research">原理与研究练习</a></li></ul>
+        </article>
       </div>
     </section>
     <section class="chapter" id="practice" aria-labelledby="practice-title">
@@ -131,6 +149,12 @@
           <h3>同一批照片，换一种划分会怎样？</h3>
           <p>用近邻分类器比较按帧随机与整段留出。点开它借用的训练帧，核对测试中有没有熟悉场景。</p>
           <ul class="links"><li><a href="leakage/">对照两种划分</a></li><li><a href="leakage/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="Bootstrap 置信区间 配对 评估 抽样 复现 假重复 统计">
+          <p class="topic">配对评估</p>
+          <h3>高两个百分点，真的有进步吗？</h3>
+          <p>固定两个模型对同一批帧的预测，增加重复帧或独立片段，对照逐帧与按片段重采样的差值区间。</p>
+          <ul class="links"><li><a href="paired-evaluation/">比较两种抽样单位</a></li><li><a href="paired-evaluation/#research">原理与研究练习</a></li></ul>
         </article>
       </div>
     </section>

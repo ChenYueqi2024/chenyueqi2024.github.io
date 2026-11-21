@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="同一组向量，先画出精确的前十名，再只允许搜索看一小部分节点。观察预算怎样决定哪些文档有机会进 RAG。"><title>少算几次距离，会漏掉什么？ · 从现象到研究</title><link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><script type="module" src="app.mjs"></script></head>
+<body class="lab"><header class="top"><a class="wordmark" href="../">从现象到研究<span>.</span></a><a href="#research">应用与研究练习</a></header><main>
+<section class="intro"><h1>少算几次距离，会漏掉什么？</h1><p class="lead">同一组向量，先画出精确的前十名，再只允许搜索看一小部分节点。观察预算怎样决定哪些文档有机会进 RAG。</p></section>
+<noscript><p class="readout">互动计算需要 JavaScript。下方的原理和论文可以直接阅读。</p></noscript>
+<section class="lab-work"><h2>搜索预算与证据召回</h2><p>每个点是一份虚构资料的合成向量。二维位置用于示意，搜索比较完整的 8 维向量。近似搜索从入口出发，优先展开已见候选中离查询最近的节点。</p>
+<div class="lab-controls"><label>问题 <select id="query"></select></label><label>图入口 <select id="entry"><option value="far">馆藏区域</option><option value="center">活动区域</option><option value="edge">申请区域</option></select></label><label for="budget">最多距离计算 <output id="budget-value">20</output> 次</label><input id="budget" type="range" min="1" max="150" value="20"><button class="primary" id="complete">使用完整预算</button></div>
+<figure class="chart-box"><figcaption>灰色未评估 · 青色已评估 · 绿色近似前 10 · 橙圈精确前 10</figcaption><canvas id="vector-graph" width="660" height="430" role="img" aria-label="图搜索的已访问点与精确近邻"></canvas></figure>
+<p id="ann-metrics" class="readout" role="status"></p><p id="evidence-status"></p>
+<div class="table-scroll"><table><thead><tr><th scope="col">排名</th><th scope="col">资料</th><th scope="col">精确前 10</th><th scope="col">内容对照</th></tr></thead><tbody id="neighbors-table"></tbody></table></div><details><summary>查看全量扫描的精确前 10</summary><p id="exact-result"></p></details></section>
+<section id="research" class="lab-research"><h2>从实验到研究</h2><h3>两种召回，回答两个问题</h3><p>精确向量召回看近似结果和全量扫描的前十重合多少，证据召回看是否找回人工标注的资料。相似度很高的旧稿和草案可能不支持所问的事实。本站距离计算数是工作量代理，它不包含离线建图、内存和计时，也不直接等于时延。</p><h3>从单层图到 HNSW</h3><p>本站把每点连到四个近邻，再补一条连通链，然后用有预算的最佳优先搜索。HNSW 使用多层可导航小世界图，加速接近结果区域，再在底层扩展候选。生产系统还会比较索引大小、延迟分位数、吞吐、过滤条件和更新成本。</p><h3>可复现课题</h3><p>固定向量库和一组不同主题的查询，扫距离预算与起点。画平均向量召回率和证据召回率，再把结果送入同一 RAG 回答器。如果精确近邻也缺证据，下一步应检查索引之前的表示、切块和重排。</p><p><a href="https://arxiv.org/abs/1603.09320">Malkov 与 Yashunin · HNSW</a> · <a href="../embeddings/">原空间与降维邻居</a> · <a href="/model-evidence-labs/rag/">RAG 可视化</a></p></section>
+</main><footer><a href="../">返回实验目录</a><a href="/model-evidence-labs/rag/">回到 RAG 可视化</a></footer></body></html>
