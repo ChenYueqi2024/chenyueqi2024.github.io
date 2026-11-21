@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Yueqi 的交互实验目录。从双目视觉、轨迹误差和傅里叶变换，到模型置信度与 RAG，找到动手实验、实际应用和研究导读。">
+  <meta name="theme-color" content="#eef3ef">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://chenyueqi2024.github.io/explore/">
+  <title>从现象到研究 · Yueqi</title>
+  <link rel="stylesheet" href="explore.css">
+  <script src="search.js" defer></script>
+</head>
+<body>
+  <header class="top"><a class="wordmark" href="../">Yueqi<span>.</span></a><a href="../academic/">研究与成长手记</a></header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <h1 id="page-title">从现象<br class="desktop-break">到研究<span>。</span></h1>
+      <div>
+        <p class="lead">挑一个让你好奇的现象，动手改一个条件。看懂结果后，再去读它怎样用于真实任务，研究者又在尝试解决什么。</p>
+        <a class="jump" href="#vision">浏览实验目录</a>
+      </div>
+    </section>
+    <div class="directory-tools">
+      <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a></nav>
+      <div class="search" hidden>
+        <label for="experiment-query">搜索实验或关键词</label>
+        <input id="experiment-query" type="search" placeholder="例如 SLAM、置信度、RAG">
+        <p id="search-status" role="status"></p>
+      </div>
+    </div>
+    <p id="empty" class="empty" hidden>没有找到对应实验。试试「傅里叶」「置信度」「位姿」或缩短关键词。</p>
+    <section class="chapter" id="vision" aria-labelledby="vision-title">
+      <div class="chapter-heading"><h2 id="vision-title">视觉几何与图像信号</h2><p>从一对照片和一段视频入手，追问我们究竟能从像素恢复什么。</p></div>
+      <div class="shelf">
+        <article class="tile" data-search="视差 双目 深度 视角游乐场 Viewpoint Playground NeRF 3DGS DUSt3R VGGT SfM MVS 世界模型">
+          <p class="topic">双目测距</p>
+          <h3>为什么远处的深度更难测准？</h3>
+          <p>拖动相机与目标，改变基线和测量噪声。再沿着双目几何读到多视角重建、神经渲染与三维生成。</p>
+          <ul class="links"><li><a href="/viewpoint-playground/#play">动手测深度</a></li><li><a href="/viewpoint-playground/#research">阅读研究导览</a></li></ul>
+        </article>
+        <article class="tile" data-search="Middlebury 对应点 遮挡 视差 stereo 匹配 像素 实拍">
+          <p class="topic">真实双目</p>
+          <h3>两张照片里，怎样找到同一个点？</h3>
+          <p>在车库实拍中匹配一个细节。把右图落点移一像素，比较近景与远景的深度误差，再检查有遮挡的像素。</p>
+          <ul class="links"><li><a href="/viewpoint-playground/photo/">匹配真实照片</a></li><li><a href="/viewpoint-playground/photo/#method">查看标定与数据</a></li></ul>
+        </article>
+        <article class="tile" data-search="轨迹 回放 TUM SLAM 漂移 RANSAC PnP VIO 野外 WildPose VGGT ATE RPE">
+          <p class="topic">相机位姿</p>
+          <h3>路线平移了，还是相机越走越偏？</h3>
+          <p>回放真实画面，对照参考轨迹与人为加入的偏移。从控制点和 RANSAC 读到回环、视觉惯性融合与动态场景中的位姿估计。</p>
+          <ul class="links"><li><a href="/trajectory-replay/#workbench">回放与对齐</a></li><li><a href="/trajectory-replay/#error-shapes">误差的真实来源</a></li><li><a href="/trajectory-replay/#method-route">位姿方法演进</a></li></ul>
+        </article>
+        <article class="tile" data-search="FFT 频谱 信号处理 Fourier 配准 周期 条纹 FDA LaMa FNO DiffFNO FraIR 超分辨率">
+          <p class="topic">傅里叶变换</p>
+          <h3>互换频谱以后，你还认得谁？</h3>
+          <p>比较幅度与相位交换后的图像，再让相位相关找回平移。重复条纹会给出多个候选。</p>
+          <ul class="links"><li><a href="/model-evidence-labs/fourier/">交换频谱</a></li><li><a href="/model-evidence-labs/fourier/#registration-title">试做图像配准</a></li><li><a href="/model-evidence-labs/fourier/#research">从配准到频域学习</a></li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="chapter" id="reliability" aria-labelledby="reliability-title">
+      <div class="chapter-heading"><h2 id="reliability-title">模型学习与可靠性</h2><p>让同一个分类器在不同环境里答题，检查它依据什么判断、给出的把握能不能信。</p></div>
+      <div class="shelf">
+        <article class="tile" data-search="捷径学习 CNN Waterbirds Group DRO DFR 稳健性 偏差 泛化 VLM 域迁移">
+          <p class="topic">数据偏差</p>
+          <h3>换个背景，它还认得吗？</h3>
+          <p>保留形状，只换颜色，再训练同一卷积网络。比较总体准确率、最差组准确率，以及改变测试环境后的表现。</p>
+          <ul class="links"><li><a href="/model-evidence-labs/">换背景并训练</a></li><li><a href="/model-evidence-labs/#mix-title">改变测试环境</a></li><li><a href="/model-evidence-labs/#research">读稳健性研究</a></li></ul>
+        </article>
+        <article class="tile" data-search="温度 缩放 校准 不确定性 可靠性图 ECE 共形预测 conformal 拒答 风险 分布漂移">
+          <p class="topic">置信度</p>
+          <h3>九成把握，真的能对九成吗？</h3>
+          <p>用上一站的分类器比较预测置信度与实际正确率。然后调整自动采用阈值，检查哪些样本需要转人工。</p>
+          <ul class="links"><li><a href="/model-evidence-labs/calibration/">试做温度校准</a></li><li><a href="/model-evidence-labs/calibration/#threshold-title">按组看复核风险</a></li><li><a href="/model-evidence-labs/calibration/#research">读风险与共形预测</a></li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="chapter" id="language" aria-labelledby="language-title">
+      <div class="chapter-heading"><h2 id="language-title">语言、检索与证据</h2><p>从模型怎样处理输入，到回答出现时怎样检查它的依据。</p></div>
+      <div class="shelf">
+        <article class="tile" data-search="RAG 检索增强生成 BM25 向量检索 DPR Self-RAG 引用 评测 Top-K 两跳 ALCE 文献">
+          <p class="topic">RAG</p>
+          <h3>答案有出处吗？</h3>
+          <p>调整切块、排序与上下文预算，观察相关资料在哪一步丢失。移走新规或跨文档证据，检查回答能否正确拒答。</p>
+          <ul class="links"><li><a href="/model-evidence-labs/rag/">动手查一条规定</a></li><li><a href="/model-evidence-labs/rag/#research">阅读 RAG 研究导读</a></li></ul>
+        </article>
+        <article class="tile" data-search="Model Mechanics 分词 Token 注意力 Self-attention 课程学习 监督学习 图文检索 强化学习 卷积 Q-learning Patch Embedding">
+          <p class="topic">基础课程</p>
+          <h3>动手拆解机器学习</h3>
+          <p>Model Mechanics 的 19 个实验，从 BPE 和语言 Transformer 走到 Patch Lens、ViT、训练与泛化，再到 MoE、GNN 和强化学习。</p>
+          <ul class="links"><li><a href="/model-mechanics/index.html">浏览 19 个实验</a></li><li><a href="/model-mechanics/retrieval/">做图文检索</a></li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="chapter" id="practice" aria-labelledby="practice-title">
+      <div class="chapter-heading"><h2 id="practice-title">研究实践</h2><p>从现象和方法回到自己的数据，检查开始实验前有哪些假设已经被破坏。</p></div>
+      <div class="shelf">
+        <article class="tile" data-search="Multiview Check 数据集 内参 外参 相机 时间戳 图像 COLMAP 异常报告">
+          <p class="topic">多视角数据体检</p>
+          <h3>为什么重建之前要先检查数据？</h3>
+          <p>先读一份故意混入异常的示例报告，再检查自己的图像尺寸、相机内参、位姿和时间戳。</p>
+          <ul class="links"><li><a href="/multiview-check/demo-report.html">查看异常报告</a></li><li><a href="/multiview-check/">检查自己的数据</a></li></ul>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer><a href="../">回到个人主页</a><a href="https://github.com/ChenYueqi2024">查看 GitHub 项目</a></footer>
+</body>
+</html>

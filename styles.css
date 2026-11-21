@@ -421,3 +421,6 @@ hr{height:1px;border:0;background:var(--line);margin:32px 0}
   .project-section,.honors-section,.playground-section,.life-honors{background:#fff}
   .js .site-header nav{display:none}
 }
+
+.gateway-explore { margin: 24px 0 0; }
+.gateway-explore a { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
