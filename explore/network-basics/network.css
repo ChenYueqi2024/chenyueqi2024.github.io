@@ -1,0 +1,43 @@
+.network-lab {--blue-surface:#edf4fa;--blue-line:#b9ccdf}
+.network-lab .intro {align-items:end}
+.network-lab .intro .lead {padding-bottom:.15rem}
+.network-lab :is(button,select):focus-visible {outline:3px solid #235487;outline-offset:3px}
+.lesson-nav {display:flex;flex-wrap:wrap;gap:7px 22px;margin:0 0 17px}
+.lesson-nav a {font-weight:700}
+.topology {list-style:none;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;margin:16px 0}
+.topology li {min-width:0;position:relative;border:1px solid var(--blue-line);border-radius:8px;background:var(--blue-surface);padding:10px 12px}
+.topology span {display:block;color:var(--muted);font-size:.9rem}
+.topology li:not(:last-child)::after {content:"";position:absolute;width:18px;height:2px;top:50%;left:100%;background:#738ea7}
+.network-note {color:var(--muted);font-size:.95rem}
+.stage-picker,.packet-actions {list-style:none;padding:0;margin:10px 0;display:flex;flex-wrap:wrap;gap:7px}
+.stage-picker button,.packet-actions button {min-height:40px}
+.stage-picker button[data-skipped=true]:not([aria-pressed=true]) {background:#eaf1f4}
+.network-stages {display:grid;gap:9px;margin-top:12px}
+.network-stages article {padding:13px 15px;border:1px solid var(--blue-line);border-left:4px solid #7294b5;border-radius:7px;background:var(--blue-surface)}
+.network-stages h3,.packet-card h3 {font-size:1.12rem;line-height:1.35;margin-bottom:4px}
+.network-stages .topic {color:var(--accent);font-size:.88rem;font-weight:750}
+.packet-cards {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.packet-card {min-width:0;padding:12px;border:1px solid var(--blue-line);border-radius:7px;background:#f7fafd}
+.packet-card.is-inspected {border-color:var(--accent);box-shadow:inset 0 3px var(--accent);background:var(--blue-surface)}
+.packet-card dl {margin:0}
+.packet-card dl div {padding:5px 0;border-top:1px solid var(--blue-line)}
+.packet-card dt {font-size:.88rem;font-weight:750;color:var(--accent)}
+.packet-card dd {margin:0;overflow-wrap:anywhere}
+.packet-card code {font-size:.89rem}
+.scroll-hint {display:none;color:var(--muted);font-size:.9rem;margin-top:8px}
+.network-table {margin-block:10px}
+.network-table :is(th,td) {vertical-align:top;padding:9px 10px}
+.network-table thead th {background:var(--blue-surface)}
+.network-table tbody th {min-width:7ch;color:var(--accent)}
+.risk-table {min-width:46rem}
+.network-sources {margin:6px 0 0;padding-left:1.45rem}
+.case-evidence {border-left:4px solid #7294b5;padding:10px 12px;background:var(--blue-surface)}
+@media(max-width:52rem) {.scroll-hint {display:block}}
+@media(max-width:680px) {
+  .topology {grid-template-columns:1fr;gap:10px}
+  .topology li {display:flex;flex-wrap:wrap;gap:3px 12px;padding:7px 10px}
+  .topology li:not(:last-child)::after {top:100%;left:24px;width:2px;height:11px}
+  .packet-cards {grid-template-columns:1fr}
+  .network-table {min-width:36rem}
+  .risk-table {min-width:46rem}
+}
