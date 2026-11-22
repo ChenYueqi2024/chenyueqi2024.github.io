@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="通过 DNS 缓存、HTTPS 终止和网络分段，分辨可达、可信与有权访问。">
+  <title>连得上，为什么还不能信？ · 从现象到研究</title>
+  <link rel="canonical" href="https://chenyueqi2024.github.io/explore/network-trust/">
+  <link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body class="lab security-lab network-trust">
+<header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+  <section class="intro"><h1>连得上，<br class="desktop-break">为什么还不能信？</h1><p class="lead">一次访问要回答三个问题：地址从哪里来？谁能看到正文？流量到达以后，应用是否应该交付数据？用同一所虚构校园的服务，把三个判断拆开看。</p></section>
+  <nav class="lesson-nav" aria-label="本页目录"><a href="#dns">DNS 与缓存</a><a href="#tls">HTTPS 与终止点</a><a href="#segment">网络分段与访问控制</a></nav>
+  <noscript><p class="readout">启用 JavaScript 可操作三个场景，各段原理可直接阅读。</p></noscript>
+  <section class="lab-work" id="dns">
+    <h2>同一域名，地址为什么不同？</h2>
+    <p>客户端问递归解析器。若相关记录和委派都未缓存，递归解析器沿根、顶级域和权威服务器查询。这里让站点在同一时刻切换地址，两台递归解析器的旧记录过期时间不同。</p>
+    <div id="dns-experiment" hidden>
+      <div class="lab-controls">
+        <label for="dns-scenario">场景 <select id="dns-scenario"><option value="migrate">站点切换地址</option><option value="cdn">CDN 区域调度</option><option value="signature">签名答案异常</option></select></label>
+        <label id="validate-label" hidden><input type="checkbox" id="validate" checked> 验证 DNSSEC</label>
+      </div>
+      <div class="lesson-control-grid" id="dns-time-control"><label for="dns-time">切换后经过 <output id="dns-clock" for="dns-time"></output><input type="range" id="dns-time" min="0" max="120" step="1" value="45"></label></div>
+      <div class="lesson-grid">
+        <div class="lesson-card"><h3>解析器 A</h3><p id="dns-a"></p></div>
+        <div class="lesson-card"><h3>解析器 B</h3><p id="dns-b"></p></div>
+      </div>
+      <p id="dns-outcome" class="readout" role="status"></p>
+    </div>
+    <details><summary>这里的 TTL 和 IP 包的 TTL 一样吗？</summary><p>DNS TTL 以秒表示记录还可缓存多久。IP 包的 TTL 在路由转发中递减，用来限制包能走多远。本例的两台解析器以 120 秒 TTL 缓存了旧地址，A 在切换前 90 秒取得旧记录，B 在切换前 30 秒取得。客户端只展示解析器的回答，自身缓存省略。</p></details>
+    <details><summary>加密 DNS 和 DNSSEC 各解决什么？</summary><p>DoH 用 HTTPS 保护客户端到所选解析器的通信。DNSSEC 验证签名数据的来源与完整性。签名区的坏签名与区域调度给出不同但合法的记录，需要不同的观测来区分。</p></details>
+  </section>
+  <section class="lab-work" id="tls">
+    <h2>HTTPS 是在哪儿解密的？</h2>
+    <p>这所校园的站点让 CDN 终止浏览器的 TLS，再用另一条 HTTPS 连接访问源站。试着站到不同位置，看同一条线路上的数据形态。观察范围限定在首段连线、CDN 节点和源站应用。</p>
+    <div id="tls-experiment" hidden>
+      <div class="lab-controls">
+        <label for="tls-scenario">证书与访问场景 <select id="tls-scenario"><option value="ok">名字匹配、连接成功</option><option value="mismatch">证书名字不匹配</option><option value="different">打开了另一个持证站点</option></select></label>
+        <label for="tls-position">观察位置 <select id="tls-position"><option value="browser">浏览器</option><option value="wire">浏览器与站点之间的链路</option><option value="edge">CDN 终止点</option><option value="origin">校园源站</option></select></label>
+      </div>
+      <p id="tls-outcome" class="readout" role="status"></p>
+    </div>
+    <details><summary>看得到 IP、读得到内容、信得过网站，有什么区别？</summary><p>在本例的直接 IP 连接上，中间链路能观察 IP、传输大小和时序。解密发生在对应 TLS 端点。浏览器核验证书链及域名是否匹配访问目标，站点业务是否值得信任仍要结合用户想访问的域名及其他信息。CDN 到源站的连接另行验证。</p></details>
+  </section>
+  <section class="lab-work" id="segment">
+    <h2>设备能互通，就应该允许互访吗？</h2>
+    <p>网络已有到应用服务网段的路由。分别点选访客、学生和运维身份，再调整网络策略，观察哪一层使请求停下来。本例外层网络策略按来源网段和目标服务行事，应用按已认证角色授权。</p>
+    <div id="segment-experiment" hidden>
+      <div class="lab-controls">
+        <label for="role">身份与来源 <select id="role"><option value="guest">访客 · 访客网</option><option value="student">登录学生 · 教学网</option><option value="operator">值班运维 · 管理网</option></select></label>
+        <label for="target">目标 <select id="target"><option value="public">公开公告</option><option value="records">个人课表</option><option value="admin" selected>管理接口</option></select></label>
+        <label><input type="checkbox" id="segmented" checked> 启用分段规则</label>
+      </div>
+      <div class="lesson-grid three">
+        <div class="lesson-card"><h3>路由</h3><p>网关知道目标网段</p></div>
+        <div class="lesson-card"><h3>网络策略</h3><p id="network-decision"></p></div>
+        <div class="lesson-card"><h3>应用授权</h3><p id="app-decision"></p></div>
+      </div>
+      <p id="segment-outcome" class="readout" role="status"></p>
+    </div>
+    <p class="lesson-muted">分段开启时，管理接口只允许管理网发起访问，其他两个示例服务网络层可达。应用仍分别检查公告、课表和管理功能的权限。试着关闭分段，再用学生身份访问管理接口。</p>
+  </section>
+  <section id="research" class="lab-research">
+    <h2>怎样验证边界真的生效？</h2>
+    <p>设计一张访问预期表，事先写下每个身份在每个网络位置下应看到的拒绝阶段。用受控环境对照 DNS 记录、TLS 端点、网络策略日志和应用审计记录。分别统计允许与拒绝两类案例，避免只验证一次成功请求。</p>
+    <p class="sources"><a href="https://www.rfc-editor.org/rfc/rfc1034.html">RFC 1034 · DNS 与缓存</a> · <a href="https://www.rfc-editor.org/rfc/rfc4033.html">RFC 4033 · DNSSEC</a> · <a href="https://www.rfc-editor.org/rfc/rfc8484.html">RFC 8484 · DoH</a> · <a href="https://www.rfc-editor.org/rfc/rfc9525.html">RFC 9525 · TLS 服务身份</a> · <a href="https://csrc.nist.gov/pubs/sp/800/207/final">NIST · 零信任架构</a></p>
+  </section>
+</main>
+<footer><a href="../#security">返回实验目录</a><a href="../network-timing/">回看请求瀑布图</a><a href="../crypto/">下一站 · 密码学入门</a></footer>
+</body>
+</html>

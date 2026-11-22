@@ -159,7 +159,7 @@
       </div>
     </section>
     <section class="chapter" id="security" aria-labelledby="security-title">
-      <div class="chapter-heading"><h2 id="security-title">网络与信息安全</h2><p>从一条网页请求认识网络，再看密码如何保护通信，以及应用怎样决定谁能读、谁能改、谁能行动。</p></div>
+      <div class="chapter-heading"><h2 id="security-title">网络与信息安全</h2><p>从网页请求与性能观测出发，理解网络信任边界，再看密码怎样保护通信、验证消息，以及如何在密文上计算。</p></div>
       <div class="shelf">
         <article class="tile" data-search="计算机网络 网安 OSI TCP/IP 协议栈 封装 Wi-Fi DHCP DNS ARP 路由 BGP TLS HTTP/2 HTTP/3 QUIC DDoS 网络攻击">
           <p class="topic">计算机网络基本知识</p>
@@ -167,11 +167,29 @@
           <p>跟着一次请求看设备和协议如何配合，比较 HTTP/2 与 HTTP/3。拆开包看逐跳转发，再根据观测记录排查网络与应用风险。</p>
           <ul class="links"><li><a href="network-basics/">走一遍网页请求</a></li><li><a href="network-basics/#risks">查看风险与防护</a></li><li><a href="network-basics/#diagnosis">练习定位问题</a></li></ul>
         </article>
+        <article class="tile" data-search="性能 网络瀑布图 Waterfall TTFB 首字节 RTT DNS TCP TLS 缓存 延迟 时延 丢包 带宽 DevTools">
+          <p class="topic">请求瀑布图</p>
+          <h3>为什么这个网页这么慢？</h3>
+          <p>调节往返时延、服务器耗时与缓存。比较两次总耗时相近的加载，找到是文档来得慢，还是图片下得慢。</p>
+          <ul class="links"><li><a href="network-timing/">动手读瀑布图</a></li><li><a href="network-timing/#research">用浏览器做实测</a></li></ul>
+        </article>
+        <article class="tile" data-search="DNS DNSSEC TTL DoH HTTPS TLS 证书 CDN 防火墙 VLAN 网络分段 应用授权 零信任">
+          <p class="topic">网络信任边界</p>
+          <h3>连得上，为什么还不能信？</h3>
+          <p>让 DNS 缓存过期，切换 HTTPS 的观测位置，再按访客、学生和运维身份逐层检查访问权限。</p>
+          <ul class="links"><li><a href="network-trust/#dns">检查解析结果</a></li><li><a href="network-trust/#tls">看 HTTPS 保护范围</a></li><li><a href="network-trust/#segment">试做网络分段</a></li></ul>
+        </article>
         <article class="tile" data-search="密码学 网安 加密 AES GCM RSA OAEP SHA-256 ECDSA 签名 hash 哈希 ChaCha">
-          <p class="topic">密码学</p>
+          <p class="topic">密码学入门</p>
           <h3>加密、哈希和签名，各自保护什么？</h3>
-          <p>实际运行 AES-GCM、RSA 混合加密、SHA-256 与 ECDSA。修改一位或一个字符，核对各自会怎样响应。</p>
-          <ul class="links"><li><a href="crypto/">试算与核验</a></li><li><a href="crypto/#research">原理与研究练习</a></li></ul>
+          <p>先分清明文、密钥、IV、标签和摘要，再实际运行 AES-GCM、RSA 混合加密、SHA-256 与 ECDSA。</p>
+          <ul class="links"><li><a href="crypto/#guide">从四个问题学起</a></li><li><a href="crypto/#workbench">试算与核验</a></li><li><a href="crypto/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="全同态加密 同态加密 FHE HE DGHV BFV BGV CKKS TFHE 密文计算 隐私计算 自举 bootstrapping 噪声 乘法深度">
+          <p class="topic">全同态加密</p>
+          <h3>看不见数据，也能算出结果？</h3>
+          <p>自己算一次密文加法与乘法。增加初始扰动和乘法深度，看解密什么时候会出错，再理解为什么需要自举。</p>
+          <ul class="links"><li><a href="homomorphic/">动手做密文计算</a></li><li><a href="homomorphic/#research">比较方案与研究问题</a></li></ul>
         </article>
         <article class="tile" data-search="安全技术 网安 TLS 零信任 后量子 密码 ML-KEM ML-DSA NIST 加密 密钥 演进">
           <p class="topic">安全技术演进</p>

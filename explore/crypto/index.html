@@ -1,16 +1,101 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="给同一段文字依次做保密、摘要和签名。翻转密文的一个位，或者改一个字符，看浏览器响应有什么不同。"><title>加密、哈希和签名，各自保护什么？ · 从现象到研究</title><link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><script type="module" src="app.mjs"></script></head>
-<body class="lab security-lab"><header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header><main>
-<section class="intro"><h1>加密、哈希和签名，各自保护什么？</h1><p class="lead">给同一段文字依次做保密、摘要和签名。翻转密文的一个位，或者改一个字符，看浏览器响应有什么不同。</p></section>
-<noscript><p class="readout">互动操作需要 JavaScript。原理与文献仍可直接阅读。</p></noscript>
-<section class="lab-work" aria-labelledby="work-title"><h2 id="work-title">在浏览器里实际计算</h2><p>使用浏览器的 Web Crypto API。每次运行生成临时密钥，实验文本和密钥留在页面内。</p>
-<div class="lab-controls"><label>选择操作 <select id="algorithm"><option value="symmetric">AES-GCM · 认证加密</option><option value="hybrid">RSA-OAEP + AES-GCM · 混合加密</option><option value="hash">SHA-256 · 摘要</option><option value="signature">ECDSA P-256 · 签名</option></select></label></div>
-<p id="crypto-description"></p>
-<label class="crypto-input" for="plain">输入一段实验文本</label><textarea id="plain" rows="2" maxlength="400">实验室的借期为七天。</textarea>
-<div class="lab-actions"><button type="button" class="primary" id="run">运行计算</button><button type="button" id="tamper" disabled>修改一个位或字符</button><button type="button" id="restore" disabled>核验原始结果</button></div>
-<dl id="crypto-results" class="crypto-results"></dl><p id="crypto-state" class="readout" role="status">请选择操作。</p></section>
-<section id="research" class="lab-research"><h2>从实验到研究</h2><h3>按目标选操作</h3><div class="table-scroll"><table><thead><tr><th scope="col">目标</th><th scope="col">工具</th><th scope="col">读数与边界</th></tr></thead><tbody><tr><th scope="row">保密，且能发现改动</th><td>AES-GCM、ChaCha20-Poly1305</td><td>对称认证加密。接收方需要共享密钥，且同一密钥下各次加密应使用不同的 nonce。</td></tr><tr><th scope="row">让指定接收方打开</th><td>RSA-OAEP + AES-GCM</td><td>公钥处理短的随机密钥，正文交给对称算法。接收方公钥的身份仍要单独验证。</td></tr><tr><th scope="row">生成固定长度指纹</th><td>SHA-256</td><td>无密钥，适合比较内容是否一致。密码存储需要带盐的密码哈希，例如 Argon2id。</td></tr><tr><th scope="row">验证谁签过哪条消息</th><td>ECDSA、RSA-PSS</td><td>私钥签名、公钥验证。消息可以公开读到；验签公钥需要有可信来源。</td></tr></tbody></table></div>
-<h3>实际协议为什么组合使用？</h3><p>安全通信需要先建立会话密钥、确认通信对端，再保护大量正文。TLS 1.3 的典型证书握手使用临时密钥协商和签名，之后用认证加密保护记录。本页的 RSA-OAEP 密钥包展示另一种混合加密结构。</p><h3>可复现课题</h3><p>记录同一消息的两次 IV 与输出长度。比较不同字节长度的中文和英文文本，核对为什么 AES-GCM 输出比明文多 16 字节。再观察改动消息时摘要差异的分布，报告样本量和平均变化位数。</p>
-<p class="sources"><a href="https://www.w3.org/TR/webcrypto/">W3C · Web Cryptography</a> · <a href="https://csrc.nist.gov/pubs/sp/800/38/d/final">NIST · GCM</a> · <a href="https://www.rfc-editor.org/rfc/rfc8017">RFC 8017 · RSA-OAEP</a> · <a href="https://csrc.nist.gov/pubs/fips/186-5/final">NIST · 数字签名</a> · <a href="https://www.rfc-editor.org/rfc/rfc9106">RFC 9106 · Argon2</a> · <a href="https://www.rfc-editor.org/rfc/rfc8439">RFC 8439 · ChaCha20-Poly1305</a></p></section></main>
-<footer><a href="/explore/">返回实验目录</a><a href="../security-history/">下一站 · 信息安全怎样演进</a></footer>
-</body></html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="从明文、密钥和身份开始学习密码学。用浏览器实际运行 AES-GCM、RSA 混合加密、SHA-256 与 ECDSA，逐项读懂实验结果。">
+  <title>加密、哈希和签名，各自保护什么？ · 从现象到研究</title>
+  <link rel="canonical" href="https://chenyueqi2024.github.io/explore/crypto/">
+  <link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body class="lab security-lab crypto-guide">
+<header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+  <section class="intro"><h1>加密、哈希和签名，各自保护什么？</h1><p class="lead">假设你要发送一句「实验室的借期为七天」。你可能希望只有收件人能读，也可能希望公开发布，但任何人都能核对它是谁发的。先明确目标，再看对应的密码工具。</p></section>
+  <nav class="lesson-nav" aria-label="本页目录"><a href="#start">先认名词</a><a href="#guide">按问题学习</a><a href="#workbench">实际运行</a><a href="#research">应用与进阶</a></nav>
+  <section class="lab-work" id="start">
+    <h2>从一句话到密码算法的输入</h2>
+    <div class="lesson-grid three">
+      <div class="lesson-card"><h3>明文、字节与编码</h3><p>「你好」是两个字符，在 UTF-8 里占 6 字节。算法处理字节。本页常用十六进制展示字节，一个字节显示成两个十六进制字符，便于比较。</p></div>
+      <div class="lesson-card"><h3>密钥、算法与密文</h3><p>算法规定如何处理数据，密钥决定某次具体运算的结果。加密得到密文，持有对应密钥的一方可以解密。下面会交替用到共享密钥、公开密钥和私钥。</p></div>
+      <div class="lesson-card"><h3>四种常见目标</h3><p><strong>机密性</strong>关心谁能读。<strong>完整性</strong>关心有没有被改。<strong>来源认证</strong>关心由谁生成。密码存储还要提高离线猜测的成本。</p></div>
+    </div>
+  </section>
+  <section class="lab-work" id="guide">
+    <h2>先问要解决什么，再选算法</h2>
+    <div class="lesson-grid">
+      <article class="lesson-card" id="aes">
+        <p class="topic">共享一把密钥 · AES-GCM</p><h3>两个人都已有同一把钥匙，怎样安全发消息？</h3>
+        <ol class="guide-flow">
+          <li>发送方准备明文、一把共享 AES 密钥，以及这次加密的初始值 IV。IV 可随密文带过去，同一密钥下不能重复使用。</li>
+          <li>加密生成密文和认证标签。标签是用密钥生成的核验数据，帮助收件人发现改动。</li>
+          <li>接收方用同一把密钥和这次的 IV 做认证解密。检查通过才交付明文。持有共享密钥的双方都能生成有效消息，外部读者无法靠这份标签区分是谁发的。</li>
+        </ol>
+        <p>观察同一段文字加密两次：页面使用同一把密钥，给两次加密生成各自的 IV。再翻转第一个密文字节的一位，看浏览器如何拒绝。</p>
+        <p><a href="#workbench" data-mode="symmetric">试用 AES-GCM</a></p>
+      </article>
+      <article class="lesson-card" id="rsa">
+        <p class="topic">第一次联系 · RSA-OAEP + AES-GCM</p><h3>双方还没有共享密钥，怎么办？</h3>
+        <ol class="guide-flow">
+          <li>收件人持有一对钥匙。公钥可发布，私钥自己保管。发送方先从可信渠道确认公钥确实属于收件人。</li>
+          <li>发送方随机生成一把短 AES 密钥，用它保护正文，再用收件人的 RSA 公钥把 AES 密钥封成一个密钥包。</li>
+          <li>发送时带上密钥包、正文密文、标签和 IV。收件人用 RSA 私钥打开密钥包，再用得到的 AES 密钥做认证解密。</li>
+        </ol>
+        <p>实验中 RSA 处理的是 32 字节密钥，正文仍由 AES 处理。任何人都能用收件人的公钥发消息，发件人身份需要另外认证。</p>
+        <p><a href="#workbench" data-mode="hybrid">试用混合加密</a></p>
+      </article>
+      <article class="lesson-card" id="hash">
+        <p class="topic">比对内容 · SHA-256</p><h3>下载的文件跟公布的版本一样吗？</h3>
+        <ol class="guide-flow">
+          <li>发布者对文件算出摘要，并在可信渠道公布它。SHA-256 对任意长度输入给出 256 位，也就是 32 字节。</li>
+          <li>你对收到的文件做同样计算。只要摘要不同，两个输入就不同。一个字符的变化通常会让很多位变动，具体数量每次不同。</li>
+          <li>核对的说服力来自已知可信的参考摘要。如果文件和参考值都来自可被改写的同一渠道，改文件的人也能重新算摘要。</li>
+        </ol>
+        <p>摘要没有密钥，也没有配套的解密操作。低熵输入仍可能被枚举猜到，所以口令存储需要专门的工具。</p>
+        <p><a href="#workbench" data-mode="hash">比较两份 SHA-256 摘要</a></p>
+      </article>
+      <article class="lesson-card" id="signature">
+        <p class="topic">公开发布与验真 · ECDSA P-256</p><h3>消息人人可读，怎样核对来源？</h3>
+        <ol class="guide-flow">
+          <li>发布者持有签名私钥，对消息签名，再把签名和消息公开给其他人。</li>
+          <li>读者拿到可信的签名公钥，用它检查当前消息与签名是否匹配。知道公钥的人可以核验。</li>
+          <li>保留签名，改动正文末尾的字符，原有签名便不能为这份修改后的正文作证。</li>
+        </ol>
+        <p>验签确认签名与某个公钥匹配。把那个公钥对应到某个人或组织，仍需可信的发布渠道、证书或其他身份绑定机制。</p>
+        <p><a href="#workbench" data-mode="signature">试试签名和验签</a></p>
+      </article>
+    </div>
+  </section>
+  <noscript><p class="readout">互动操作需要 JavaScript。上方的流程和下方的练习说明仍可阅读。</p></noscript>
+  <section class="lab-work" id="workbench" aria-labelledby="work-title">
+    <h2 id="work-title">在浏览器里实际计算</h2>
+    <p>使用浏览器的 Web Crypto API。需要密钥的操作每次生成临时密钥，输入和密钥留在当前页面。建议先用默认文本，再试「你好」或「abc」。</p>
+    <div class="lab-controls"><label for="algorithm">选择操作 <select id="algorithm"><option value="symmetric">AES-GCM · 认证加密</option><option value="hybrid">RSA-OAEP + AES-GCM · 混合加密</option><option value="hash">SHA-256 · 摘要</option><option value="signature">ECDSA P-256 · 签名</option></select></label></div>
+    <p id="crypto-description"></p>
+    <label class="crypto-input" for="plain">输入一段实验文本</label>
+    <textarea id="plain" rows="2" maxlength="400" aria-describedby="plain-size">实验室的借期为七天。</textarea>
+    <p id="plain-size" class="lesson-muted"></p>
+    <div class="lab-actions"><button type="button" class="primary" id="run">运行计算</button><button type="button" id="tamper" disabled>修改一个位或字符</button><button type="button" id="restore" disabled>核验原始结果</button></div>
+    <dl id="crypto-results" class="crypto-results"></dl>
+    <p id="crypto-state" class="readout" role="status">请选择操作。</p>
+    <h3>怎样读这张结果单？</h3>
+    <p id="crypto-reading"></p>
+  </section>
+  <section id="research" class="lab-research">
+    <h2>把工具放回真实系统</h2>
+    <h3>登录密码为什么要加盐？</h3>
+    <p>系统通常保存可核验的口令派生值。随机盐让相同口令在不同记录里得到不同结果，减少预计算成果的复用。Argon2id 之类的口令哈希用可配置的时间和内存成本，提高每次猜测的代价。需要共享密钥并认证一条消息时，则常用 HMAC 等带密钥的消息认证算法。</p>
+    <h3>HTTPS 为什么要用多种密码工具？</h3>
+    <p>典型 TLS 1.3 证书握手会确认服务器身份、建立会话密钥，再用认证加密保护通信数据。它的密钥建立流程和上面的 RSA-OAEP 密钥包不同。可以在 <a href="../network-trust/#tls">HTTPS 图解</a>里切换观察位置，区分浏览器、中间链路、CDN 和源站分别看到什么。</p>
+    <h3>复现实验与继续学习</h3>
+    <ol>
+      <li>用「你好」和「abc」比较字符长度与字节长度。记录相同文本两次 AES-GCM 加密的 IV 和密文，并算出 128 位标签实际占多少字节。</li>
+      <li>多换几组文本，记录 SHA-256 的变化位数，看看它会不会总是 128。再把摘要与签名的核验步骤分别复述一遍。</li>
+      <li>想象把数据加密交给云端，还要在云端完成统计。继续试试 <a href="../homomorphic/">全同态加密演示</a>，观察什么时候密文计算的结果能解回预期答案。</li>
+    </ol>
+    <p class="sources"><a href="https://www.w3.org/TR/webcrypto/">W3C · Web Cryptography</a> · <a href="https://csrc.nist.gov/pubs/fips/197/final">NIST · AES</a> · <a href="https://csrc.nist.gov/pubs/sp/800/38/d/final">NIST · GCM</a> · <a href="https://www.rfc-editor.org/rfc/rfc8017">RFC 8017 · RSA-OAEP</a> · <a href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final">NIST · SHA-256</a> · <a href="https://csrc.nist.gov/pubs/fips/186-5/final">NIST · 数字签名</a> · <a href="https://www.rfc-editor.org/rfc/rfc9106">RFC 9106 · Argon2</a> · <a href="https://www.rfc-editor.org/rfc/rfc8439">RFC 8439 · 另一种认证加密 ChaCha20-Poly1305</a></p>
+  </section>
+</main>
+<footer><a href="../#security">返回实验目录</a><a href="../network-trust/#tls">对照 HTTPS 的两段连接</a><a href="../homomorphic/">下一站 · 全同态加密</a></footer>
+</body>
+</html>

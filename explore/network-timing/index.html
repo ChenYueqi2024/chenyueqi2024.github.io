@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="调整时延、丢包、服务端耗时和缓存，读懂网页请求瀑布图。">
+  <title>为什么这个网页这么慢？ · 从现象到研究</title>
+  <link rel="canonical" href="https://chenyueqi2024.github.io/explore/network-timing/">
+  <link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body class="lab security-lab">
+<header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">实测与研究</a></header>
+<main>
+  <section class="intro"><h1>为什么这个网页<br class="desktop-break"><span class="title-phrase">这么慢？</span></h1><p class="lead">同样等了两秒，有时服务器还在算，有时图片已经开始下了。这里把一次页面加载拆成几个资源和几段等待，让你根据瀑布图找瓶颈。</p></section>
+  <section class="lab-work" aria-labelledby="waterfall-title">
+    <h2 id="waterfall-title">先看总耗时，再找等待在哪</h2>
+    <p>试试「主文档处理慢」和「图片下载慢」。总耗时都接近两秒，首字节出现的时间与最后完成的资源却不同。点资源名可以逐段读数。</p>
+    <noscript><p class="readout">启用 JavaScript 可调整条件和查看瀑布图。下方的读图顺序仍可阅读。</p></noscript>
+    <div id="timing-workbench" hidden>
+      <div class="lab-actions" role="group" aria-label="场景预设">
+        <button type="button" data-preset="normal">初次访问</button>
+        <button type="button" data-preset="server">主文档处理慢</button>
+        <button type="button" data-preset="image">图片下载慢</button>
+        <button type="button" data-preset="warm">重复访问</button>
+      </div>
+      <div class="lesson-control-grid">
+        <label for="rtt">往返时延 <output id="rtt-value" for="rtt"></output><input id="rtt" type="range" min="20" max="300" step="10"></label>
+        <label for="origin">主文档处理 <output id="origin-value" for="origin"></output><input id="origin" type="range" min="20" max="1800" step="20"></label>
+        <label for="rate">每资源有效速率 <output id="rate-value" for="rate"></output><input id="rate" type="range" min="2" max="40" step="1"></label>
+      </div>
+      <div class="lab-controls">
+        <label for="connection">连接方式 <select id="connection"><option value="h2">HTTP/2 · TCP + TLS</option><option value="h3">HTTP/3 · QUIC</option><option value="reuse">复用已有连接</option></select></label>
+        <label><input id="dns-cache" type="checkbox"> DNS 缓存命中</label>
+        <label><input id="asset-cache" type="checkbox"> 图片和样式由本地缓存提供</label>
+        <label><input id="lost" type="checkbox"> 图片传输等待一次恢复</label>
+      </div>
+      <div class="lesson-grid three">
+        <div class="lesson-card">从本次开始到文档首字节 <strong id="first-byte" class="metric-value"></strong></div>
+        <div class="lesson-card">本例所列资源全部完成 <strong id="load-end" class="metric-value"></strong></div>
+        <div class="lesson-card">最后完成的资源 <strong id="last-resource" class="metric-value"></strong></div>
+      </div>
+      <ul class="lesson-chips" aria-label="图例">
+        <li><span class="legend-key stage-dns"></span>DNS</li><li><span class="legend-key stage-connect"></span>建立连接</li><li><span class="legend-key stage-tls"></span>TLS</li><li><span class="legend-key stage-wait"></span>等待响应</li><li><span class="legend-key stage-download"></span>下载 / 本地读取</li>
+      </ul>
+      <div id="waterfall" class="waterfall" aria-label="教学请求瀑布图"></div>
+      <p class="readout lesson-status" id="timing-detail" role="status"></p>
+    </div>
+    <p class="lesson-muted">教学模型。五个资源同源，HTML 结束后才发现样式、图片和脚本，脚本结束后才请求数据。主文档承担首次连接开销，其他请求复用该连接。并行资源使用各自的有效速率，模型省略共享带宽、浏览器渲染、流优先级和重试细节。勾选恢复会给图片下载增加一次 RTT。</p>
+  </section>
+  <section class="lab-work" aria-labelledby="reading-title">
+    <h2 id="reading-title">怎么读图？</h2>
+    <ol class="lesson-list">
+      <li><strong>先找首字节。</strong> 如果 HTML 的等待阶段特别长，可能是请求往返或服务端处理慢。可用服务端计时辅助判断。</li>
+      <li><strong>再找最后完成的资源。</strong> 首字节快，整体仍可能慢。对照下载条的长度和资源大小，再检查该资源什么时候才被发现。</li>
+      <li><strong>观察复用省掉了什么。</strong> DNS 缓存省的是查询，连接复用省的是握手，资源缓存省的是网络传输。它们对应不同的记录。</li>
+    </ol>
+  </section>
+  <section id="research" class="lab-research">
+    <h2>用浏览器核对自己的观测</h2>
+    <p>打开自己控制的页面，在开发者工具的 Network 面板选中一个请求并查看 Timing。记录协议、请求发起原因和各阶段时长，再比较首次与重复加载。禁用 HTTP 缓存后仍可能复用现有连接或 DNS 缓存。Timing 中的等待时间从发出请求附近开始，别和本实验从整次加载起点统计的文档首字节耗时混用。真实页面还可对照最大内容绘制时间、服务端计时和响应大小。</p>
+    <p class="sources"><a href="https://developer.chrome.com/docs/devtools/network/reference/#timing-explanation">Chrome DevTools · Timing 各阶段</a> · <a href="https://www.w3.org/TR/resource-timing/">W3C · Resource Timing</a> · <a href="https://www.w3.org/TR/server-timing/">W3C · Server Timing</a></p>
+  </section>
+</main>
+<footer><a href="../#security">返回实验目录</a><a href="../network-basics/">回看网络基础</a><a href="../network-trust/">下一站 · 网络信任边界</a></footer>
+</body>
+</html>
+

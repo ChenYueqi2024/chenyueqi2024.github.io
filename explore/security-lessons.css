@@ -1,0 +1,43 @@
+.lab h1 .title-phrase {color:inherit;white-space:nowrap}
+.lesson-nav {display:flex;flex-wrap:wrap;gap:8px 20px;margin:0 0 16px;font-weight:700}
+.lesson-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}
+.lesson-grid.three {grid-template-columns:repeat(3,minmax(0,1fr))}
+.lesson-card {min-width:0;border:1px solid #bacddd;border-radius:8px;background:#f1f6fb;padding:12px 14px;overflow-wrap:anywhere}
+.lesson-card h3 {font-size:1.11rem;margin-bottom:4px}
+.lesson-card dl,.lesson-card ol {margin:6px 0}
+.lesson-card ol {padding-left:1.45rem}
+.lesson-card code,.lesson-code {overflow-wrap:anywhere;font-size:.94em}
+.lesson-control-grid {margin:13px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 14px}
+.lesson-control-grid label {min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:6px;font-weight:700}
+.lesson-control-grid input {grid-column:1/-1}
+.lesson-control-grid input[type=range] {width:100%}
+.lesson-muted {color:var(--muted);font-size:.95rem}
+.lesson-list {margin:8px 0;padding-left:1.45rem}
+.lesson-list li+li {margin-top:7px}
+.lesson-table th,.lesson-table td {vertical-align:top}
+.lesson-table th[scope=row] {overflow-wrap:anywhere}
+.lesson-chips {list-style:none;padding:0;display:flex;gap:6px 15px;flex-wrap:wrap}
+.lesson-chips li {display:flex;gap:6px;align-items:center}
+.legend-key {width:.86em;height:.86em;border-radius:2px}
+.lesson-grid h3+dl div {padding:5px 0;border-top:1px solid #d2dce5}
+.lesson-grid dd {margin:0}
+.lesson-grid dt {font-weight:700}
+.lab :is(button,select):focus-visible {outline:3px solid var(--accent);outline-offset:3px}
+.metric-value {display:block;font-size:clamp(1.1rem,3vw,1.65rem);line-height:1.35;color:var(--accent)}
+.waterfall {display:grid;grid-template-columns:minmax(5.25rem,8rem) minmax(0,1fr);align-items:center;gap:7px 9px;min-width:0;margin:12px 0}
+.waterfall-axis {display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted)}
+.waterfall-name {width:100%;overflow-wrap:anywhere}
+.waterfall-track {position:relative;height:1.65rem;background:repeating-linear-gradient(90deg,#cad6e3 0 1px,#f1f6fa 1px 25%)}
+.waterfall-bar {height:100%;position:absolute}
+.stage-dns {background:#235487}.stage-connect {background:#63438a}.stage-tls {background:#a04728}.stage-wait {background:#0a6b56}.stage-download {background:#3f6687}
+.network-trust details {border:1px solid #c6d5ce;border-radius:8px;padding:8px 12px}
+.crypto-guide .topic {color:var(--accent);font-size:.9rem;font-weight:750}
+.crypto-guide .guide-flow li {padding:6px 0}
+.crypto-guide .crypto-results {margin-bottom:3px}
+.he-circuit td {font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.he-circuit {table-layout:fixed}
+.he-circuit td:first-child {font-weight:650}
+.lesson-status {min-height:3em}
+@media(max-width:720px){.lesson-grid.three {grid-template-columns:1fr}.lesson-control-grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:490px){.lesson-grid {grid-template-columns:1fr}.lesson-control-grid {grid-template-columns:1fr}.he-circuit th,.he-circuit td {padding-inline:4px}}
+
