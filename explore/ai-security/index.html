@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="用虚构的资料库和操作面板，分开检查检索权限、引用来源和工具授权。每一步都能看到请求为什么通过、被拦下或等待确认。"><title>模型读到了，谁授权它行动？ · 从现象到研究</title><link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><script type="module" src="app.mjs"></script></head>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="用虚构的资料库和操作面板，分开检查检索权限、引用来源和工具授权。每一步都能看到请求为什么通过、被拦下或等待确认。"><title>模型读到了，谁授权它行动？ · 从现象到研究</title><link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><script type="module" src="app.mjs"></script></head>
 <body class="lab security-lab"><header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header><main>
 <section class="intro"><h1>模型读到了，谁授权它行动？</h1><p class="lead">用虚构的资料库和操作面板，分开检查检索权限、引用来源和工具授权。每一步都能看到请求为什么通过、被拦下或等待确认。</p></section>
+<nav class="lesson-nav" aria-label="本页目录"><a href="#sandbox">权限沙盒</a><a href="#lifecycle">攻击、防御与生命周期</a><a href="#changes">和传统应用对照</a></nav>
 <noscript><p class="readout">互动操作需要 JavaScript。原理与文献仍可直接阅读。</p></noscript>
-<section class="lab-work"><h2>走一遍带权限的 RAG</h2><p>这是规则驱动的沙盒。所有资料与角色都是虚构的，操作只更新页面上的模拟结果。</p>
+<section class="lab-work" id="sandbox"><h2>走一遍带权限的 RAG</h2><p>这是规则驱动的沙盒。所有资料与角色都是虚构的，操作只更新页面上的模拟结果。</p>
 <div class="lab-controls"><label>情景 <select id="scenario"></select></label><label>当前角色 <select id="role"><option value="reader">访客</option><option value="staff">成员</option><option value="lead">负责人</option></select></label></div>
 <p id="query" class="readout"></p>
 <div class="lab-controls"><label><input id="acl" type="checkbox" checked> 检索前置权限检查</label><label><input id="verify" type="checkbox" checked> 只用已核验来源作答</label><label><input id="confirm" type="checkbox" disabled> 用户确认分享这份公开摘要</label></div>
@@ -11,6 +12,28 @@
 <li><h3>哪些来源可用于回答？</h3><p id="answer"></p><p id="cited"></p></li>
 <li><h3>谁可以批准操作？</h3><p>当前候选操作 <strong id="proposal"></strong></p><p id="verdict" class="readout" role="status"></p></li></ol>
 <p>试试三个对照。访客请求内部资料时关掉前置检查。总结网页时关掉来源核验。负责人分享公开摘要时，分别保留和勾选最后确认。</p></section>
-<section id="research" class="lab-research"><h2>从实验到研究</h2><h3>为什么三层检查都需要？</h3><p>权限过滤决定模型能读到什么。出处核验决定哪些资料可以支撑回答。操作授权由独立的工具服务核对身份、请求范围、资源和用户意图，即使某条建议已出现在上下文中也需要重新授权。人类确认只完成规定的审批环节，资源权限仍由服务检查。</p><h3>从 RAG 扩展到系统安全</h3><p>提示注入源于模型同时处理任务指令和可能不可信的数据。过度代理则常与工具功能、权限和自主程度过大有关。把风险沿生命周期拆开看，还包括训练和供应链中的数据完整性、部署后的隐私与输出可靠性，以及发生异常时能否追踪来源和动作。</p><h3>可复现课题</h3><p>用同一批虚构请求列出角色、资源、预期可见范围和动作决策。分别测越权候选进入上下文的比例、引用支持率、误拒率、独立授权拦截率。记录拒绝发生在哪一步，再比较改变单一控制前后的差值。</p><p class="sources"><a href="https://genai.owasp.org/llmrisk/llm012025-prompt-injection/">OWASP · LLM01 提示注入</a> · <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">OWASP · LLM06 过度代理</a> · <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">NIST · 生成式 AI 风险管理</a> · <a href="/model-evidence-labs/rag/">延伸 · 原 RAG 实验</a></p></section></main>
-<footer><a href="/explore/">返回实验目录</a><a href="../security-history/">回到安全技术导读</a></footer>
+<section id="lifecycle" class="lab-work">
+  <h2>大模型系统，哪些环节会出问题？</h2>
+  <div class="lesson-grid">
+    <article class="lesson-card"><h3>数据与训练 · 数据投毒</h3><p>不可信或被污染的数据改变模型行为。记录训练数据来源与版本，检查关键数据变化，保留独立评测，并能定位和回退可疑变更。</p></article>
+    <article class="lesson-card"><h3>构建与发布 · 供应链风险</h3><p>模型权重、分词器、适配器、依赖和工具插件都可能影响行为。通过可信来源取得组件，验证产物来源，限制加载权限，在隔离环境中审查并测试更新。</p></article>
+    <article class="lesson-card"><h3>上下文 · 直接与间接提示注入</h3><p>直接注入来自用户输入，间接注入来自系统读入的外部资料。两者都可能影响模型的回答或操作建议。限制资料与指令的信任级别，做好来源标记，由外部策略决定真正的权限。</p></article>
+    <article class="lesson-card"><h3>检索与生成 · 敏感信息泄露</h3><p>私有资料进入不合适的上下文，或提示、响应、日志携带敏感内容时，数据可能越过原有边界。检索前按用户过滤，减少上下文和日志中的敏感字段，并测试每个角色的可见范围。</p></article>
+    <article class="lesson-card"><h3>呈现与集成 · 不当处理模型输出</h3><p>生成的文本进入网页或业务系统时，可能被当作可执行的内容。按下游场景使用安全的渲染、参数化接口与类型校验，并核对引用是否支持结论。</p></article>
+    <article class="lesson-card"><h3>工具调用 · 过度代理</h3><p>权限过大的工具让错误的建议也可能造成真实修改。按用户身份独立授权，限制动作和资源，对高影响变更显示确认范围，记录结果并控制调用成本。</p></article>
+  </div>
+  <p class="sources"><a href="https://csrc.nist.gov/pubs/ai/100/2/e2025/final">NIST AI 100-2 · 对抗机器学习分类</a> · <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP · 提示注入</a> · <a href="https://genai.owasp.org/llmrisk/llm032025-supply-chain/">OWASP · 模型供应链</a> · <a href="https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/">OWASP · 输出处理</a></p>
+</section>
+<section id="changes" class="lab-work">
+  <h2>传统安全原则到了大模型时代，怎么用？</h2>
+  <ol class="lesson-list">
+    <li><strong>继续区分数据与指令。</strong> 传统数据库查询可用参数化接口约束输入。模型同时理解自然语言指令和材料，控制点需要延伸到模型外部的权限和下游接口。</li>
+    <li><strong>继续做最小权限。</strong> 从传统的服务账号、接口和数据库，延伸到每个用户能检索哪份文档、能选哪个工具、能操作哪个对象。</li>
+    <li><strong>继续做来源核验。</strong> 签名和传输加密有助于核对出处并保护信道。引用事实还需比对原文，来源真实与内容支持结论分别检查。</li>
+    <li><strong>升级验收方法。</strong> 对同一批有权与无权请求分别测数据曝光、动作拒绝和误拒。真实系统还应重复测试输入变体和模型版本变化，并跟踪运行时异常。</li>
+  </ol>
+  <p class="sources"><a href="../security-history/#era-5">回到技术演进</a> · <a href="../network-trust/#segment">对照传统网络分段与应用授权</a></p>
+</section>
+<section id="research" class="lab-research"><h2>从实验到研究</h2><h3>为什么三层检查都需要？</h3><p>权限过滤决定模型能读到什么。出处核验决定哪些资料可以支撑回答。操作授权由独立的工具服务核对身份、请求范围、资源和用户意图，即使某条建议已出现在上下文中也需要重新授权。人类确认只完成规定的审批环节，资源权限仍由服务检查。</p><h3>可复现课题</h3><p>用同一批虚构请求列出角色、资源、预期可见范围和动作决策。分别测越权候选进入上下文的比例、引用支持率、误拒率、独立授权拦截率。记录拒绝发生在哪一步，再比较改变单一控制前后的差值。</p><p class="sources"><a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP · LLM01 提示注入</a> · <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">OWASP · LLM06 过度代理</a> · <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">NIST · 生成式 AI 风险管理</a> · <a href="/model-evidence-labs/rag/">延伸 · 原 RAG 实验</a></p></section></main>
+<footer><a href="../#security">返回实验目录</a><a href="../security-history/">回到安全技术导读</a></footer>
 </body></html>

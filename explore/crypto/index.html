@@ -12,7 +12,7 @@
 <header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
 <main>
   <section class="intro"><h1>加密、哈希和签名，各自保护什么？</h1><p class="lead">假设你要发送一句「实验室的借期为七天」。你可能希望只有收件人能读，也可能希望公开发布，但任何人都能核对它是谁发的。先明确目标，再看对应的密码工具。</p></section>
-  <nav class="lesson-nav" aria-label="本页目录"><a href="#start">先认名词</a><a href="#guide">按问题学习</a><a href="#workbench">实际运行</a><a href="#research">应用与进阶</a></nav>
+  <nav class="lesson-nav" aria-label="本页目录"><a href="#start">先认名词</a><a href="#guide">按问题学习</a><a href="#workbench">实际运行</a><a href="#weak-links">常见攻击与防护</a><a href="#research">应用与进阶</a></nav>
   <section class="lab-work" id="start">
     <h2>从一句话到密码算法的输入</h2>
     <div class="lesson-grid three">
@@ -32,6 +32,7 @@
           <li>接收方用同一把密钥和这次的 IV 做认证解密。检查通过才交付明文。持有共享密钥的双方都能生成有效消息，外部读者无法靠这份标签区分是谁发的。</li>
         </ol>
         <p>观察同一段文字加密两次：页面使用同一把密钥，给两次加密生成各自的 IV。再翻转第一个密文字节的一位，看浏览器如何拒绝。</p>
+        <p><strong>常见风险：</strong>密文可能在途中被篡改。认证标签能检测改动，但 nonce 重用会损害协议假设。应用应在核验通过之后才处理明文。</p>
         <p><a href="#workbench" data-mode="symmetric">试用 AES-GCM</a></p>
       </article>
       <article class="lesson-card" id="rsa">
@@ -42,6 +43,7 @@
           <li>发送时带上密钥包、正文密文、标签和 IV。收件人用 RSA 私钥打开密钥包，再用得到的 AES 密钥做认证解密。</li>
         </ol>
         <p>实验中 RSA 处理的是 32 字节密钥，正文仍由 AES 处理。任何人都能用收件人的公钥发消息，发件人身份需要另外认证。</p>
+        <p><strong>常见风险：</strong>中间人替换公钥。发送方即使用正确算法，也可能在给错误对象加密。用可信证书或已核对的公钥指纹确认收件人身份。</p>
         <p><a href="#workbench" data-mode="hybrid">试用混合加密</a></p>
       </article>
       <article class="lesson-card" id="hash">
@@ -52,6 +54,7 @@
           <li>核对的说服力来自已知可信的参考摘要。如果文件和参考值都来自可被改写的同一渠道，改文件的人也能重新算摘要。</li>
         </ol>
         <p>摘要没有密钥，也没有配套的解密操作。低熵输入仍可能被枚举猜到，所以口令存储需要专门的工具。</p>
+        <p><strong>常见风险：</strong>文件和未签名摘要同时被替换。防护是从独立可信渠道获得摘要，或验证由可信发布密钥签名的产物。</p>
         <p><a href="#workbench" data-mode="hash">比较两份 SHA-256 摘要</a></p>
       </article>
       <article class="lesson-card" id="signature">
@@ -62,6 +65,7 @@
           <li>保留签名，改动正文末尾的字符，原有签名便不能为这份修改后的正文作证。</li>
         </ol>
         <p>验签确认签名与某个公钥匹配。把那个公钥对应到某个人或组织，仍需可信的发布渠道、证书或其他身份绑定机制。</p>
+        <p><strong>常见风险：</strong>签名私钥失陷或旧的有效签名被重复使用。保护和轮换私钥，并在适用的协议中核验签名覆盖的用途、时效与请求标识。</p>
         <p><a href="#workbench" data-mode="signature">试试签名和验签</a></p>
       </article>
     </div>
@@ -80,6 +84,16 @@
     <p id="crypto-state" class="readout" role="status">请选择操作。</p>
     <h3>怎样读这张结果单？</h3>
     <p id="crypto-reading"></p>
+  </section>
+  <section id="weak-links" class="lab-work" aria-labelledby="weak-title">
+    <h2 id="weak-title">验算通过，还要检查哪几件事？</h2>
+    <div class="lesson-grid">
+      <article class="lesson-card"><h3>重放 · 这是不是一条新操作？</h3><p>一条真实的已签名请求可能被再次提交。金额、收件人和签名都相同，业务仍可能多执行一次。由协议绑定时效或唯一请求编号，由服务端识别重复提交。实验中的「核验原始结果」只重做数学核验，无业务操作。</p></article>
+      <article class="lesson-card"><h3>离线猜测 · 数据库泄露以后怎么办？</h3><p>拿到口令派生值后，猜测可发生在登录页面之外。用每条记录的随机盐和适当参数的 Argon2id 增加离线猜测的成本。在线认证还要单独做尝试限速和抗钓鱼认证。</p></article>
+      <article class="lesson-card"><h3>侧信道 · 正确的算法也要正确实现</h3><p>处理时间、功耗等外部观察可能与秘密状态相关。选用经审查的库与适合运行环境的实现，对涉及密钥的运算考虑恒定时间和硬件隔离。</p></article>
+      <article class="lesson-card"><h3>密钥泄露 · 谁有权限动这把钥匙？</h3><p>把密钥写进代码、日志或过宽的共享账号会扩大暴露面。采用受控密钥管理、最小权限与审计，并事先规划轮换和吊销。长期数据的恢复和迁移也需要纳入设计。</p></article>
+    </div>
+    <p class="sources"><a href="https://www.rfc-editor.org/rfc/rfc9846.html">RFC 9846 · TLS 的重放边界</a> · <a href="https://www.rfc-editor.org/rfc/rfc9106.html">RFC 9106 · Argon2</a> · <a href="../security-history/#principles">沿时间线理解这些防护</a></p>
   </section>
   <section id="research" class="lab-research">
     <h2>把工具放回真实系统</h2>

@@ -56,7 +56,17 @@
       <div class="lesson-card"><h3>分层全同态</h3><p>允许组合操作，按预先选择的乘法深度配置参数。乘法深度是任一输入到输出路径上串联的乘法层数，许多并行乘法不等于许多层。</p></div>
       <div class="lesson-card"><h3>全同态与自举</h3><p>自举的一种经典思路是同态执行解密电路，把要解的旧密文变成加密同一明文的新密文，恢复后续计算能力。这个过程通常比一次加法更昂贵。</p></div>
     </div>
-    <p>本页显示的是小整数例子的余量折返。真实格密码方案用不同的数学结构处理噪声、模数和参数。CKKS 还需管理数值尺度及近似误差。能委托计算也不等于能核验服务方是否按约定执行，解密后的统计结果同样可能泄露输入信息。</p>
+    <p>本页显示的是小整数例子的余量折返。真实格密码方案用不同的数学结构处理噪声、模数和参数。CKKS 还需管理数值尺度及近似误差。</p>
+  </section>
+  <section class="lab-work" id="trust-boundary" aria-labelledby="trust-title">
+    <h2 id="trust-title">云看不到明文之后，还要防什么？</h2>
+    <div class="lesson-grid">
+      <article class="lesson-card"><h3>结果推断</h3><p>授权用户拿到细粒度汇总，仍可能从结果推测个体信息。限制过小分组、控制查询与发布频率，必要时为统计结果另行设计隐私机制。</p></article>
+      <article class="lesson-card"><h3>错误或被改写的计算结果</h3><p>现有演示允许求值方对密文做数学运算。实际系统需要明确能否信任执行方，对高价值任务可用业务复核或可验证计算来检查求值是否符合约定。</p></article>
+      <article class="lesson-card"><h3>解密与密钥暴露</h3><p>解密服务仍接触密钥和结果，应限制可解密的数据与主体，隔离密钥并记录调用。输出的可见范围和保留时间也要纳入设计。</p></article>
+      <article class="lesson-card"><h3>元数据与成本</h3><p>访问频率、消息大小和处理时序可能仍可见，昂贵的请求也会占用计算资源。按威胁模型单独处理元数据，并设置请求预算和异常监测。</p></article>
+    </div>
+    <p class="sources"><a href="../security-history/#encrypted-compute">回到密码学发展脉络</a></p>
   </section>
   <section id="research" class="lab-research">
     <h2>从方案选择走到科研问题</h2>

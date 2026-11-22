@@ -1,16 +1,104 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从协商一把密钥，走到给 AI 划清行动范围。每一步都问：这项技术解决了什么问题，还留下哪些决定要交给系统？"><title>安全技术是在保护什么？ · 从现象到研究</title><link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><script type="module" src="app.mjs"></script></head>
-<body class="lab security-lab"><header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header><main>
-<section class="intro"><h1>安全技术是在保护什么？</h1><p class="lead">从协商一把密钥，走到给 AI 划清行动范围。每一步都问：这项技术解决了什么问题，还留下哪些决定要交给系统？</p></section>
-<noscript><p class="readout">互动操作需要 JavaScript。原理与文献仍可直接阅读。</p></noscript>
-<section class="lab-work"><h2>从你想保护的东西开始</h2><p>选一个任务，看看它主要依赖哪一段技术，又需要怎样的额外保障。</p><div class="lab-actions" id="history-controls" hidden></div><p id="history-result" class="readout" role="status" hidden></p><p id="history-jump" hidden><a>跳到相关技术</a></p></section>
-<section class="lab-work"><h2>问题怎样一层层展开</h2><p>这条路线选取代表性节点。密码、访问控制、审计与管理一直并行发展。</p><ol class="security-flow security-timeline">
-<li id="era-0"><p class="topic">1976 · 公钥密码</p><h3>共享秘密怎样建立？</h3><p>Diffie 与 Hellman 给出在公开信道上协商共享秘密的思路。RSA、椭圆曲线等公钥技术后来服务不同用途：加密、签名或协商密钥。</p><p><strong>要继续核对的条件</strong>　临时秘密可以通过公开交换建立。还需要另一套机制确认通信对端的身份。</p><p class="sources"><a href="https://ee.stanford.edu/~hellman/publications/24.pdf">Diffie 与 Hellman · New Directions in Cryptography</a></p></li>
-<li id="era-1"><p class="topic">2001–2007 · 对称加密与认证</p><h3>怎样大量加密，还能发现改动？</h3><p>AES 是块密码；GCM 把加密和完整性认证组合起来。ChaCha20-Poly1305 是用流密码与认证器实现的另一种认证加密，适用于很多软件场景。</p><p><strong>要继续核对的条件</strong>　选了认证加密仍需管理密钥、nonce 和协议状态。同一把密钥下重用 nonce 会破坏安全假设。</p><p class="sources"><a href="https://csrc.nist.gov/pubs/sp/800/38/d/final">NIST · GCM 规范</a></p></li>
-<li id="era-2"><p class="topic">2018 · 协议与身份</p><h3>我连的是想连的服务器吗？</h3><p>TLS 1.3 把协商、身份确认和会话数据保护串起来。典型证书握手用临时密钥交换建立会话秘密，用签名确认握手，再用认证加密保护记录。</p><p><strong>要继续核对的条件</strong>　TLS 保护信道。应用还要决定已经登录的人可以读取哪份文档、执行哪种操作。</p><p class="sources"><a href="https://www.rfc-editor.org/rfc/rfc8446">RFC 8446 · TLS 1.3</a></p></li>
-<li id="era-3"><p class="topic">2020 · 按资源授权</p><h3>已经进了内网，就可以访问资源吗？</h3><p>NIST 的零信任架构强调按主体、设备状态、资源与策略作判断。授权可以细到某份资料或具体动作，并可结合审计记录确认决定。</p><p><strong>要继续核对的条件</strong>　策略出来后仍需执行和验证。管理者要检查最小权限的覆盖、误拒和日志完整性。</p><p class="sources"><a href="https://csrc.nist.gov/pubs/sp/800/207/final">NIST SP 800-207 · Zero Trust Architecture</a></p></li>
-<li id="era-4"><p class="topic">2024 · 后量子密码</p><h3>计算能力变了，密码怎么迁移？</h3><p>NIST 标准化 ML-KEM 用于建立共享密钥，ML-DSA 用于验证签名。迁移需要检查哪些协议和产品依赖原有公钥算法，并测试新密钥、签名大小及互操作性。</p><p><strong>要继续核对的条件</strong>　后量子算法替换的是相关公钥原语。部署还得考察实现、升级计划、数据需要保密多久。</p><p class="sources"><a href="https://csrc.nist.gov/pubs/fips/203/final">NIST FIPS 203 · ML-KEM</a> · <a href="https://csrc.nist.gov/pubs/fips/204/final">NIST FIPS 204 · ML-DSA</a></p></li>
-<li id="era-5"><p class="topic">2024 起 · 生成式 AI 与工具授权</p><h3>能读资料，就能替人行动吗？</h3><p>RAG 扩大了模型能接触的资料，工具调用又把回答接到实际操作。风险控制延伸到检索权限、证据质量和行动授权，并覆盖训练数据、依赖与输出的生命周期。</p><p><strong>要继续核对的条件</strong>　给模型的内容不自动成为授权。独立的访问控制、审批与记录仍然有作用。</p><p class="sources"><a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">NIST AI 600-1 · 生成式 AI 风险管理</a></p></li></ol></section>
-<section id="research" class="lab-research"><h2>从技术史到自己的研究题</h2><h3>把安全目标写在前面</h3><p>先指出资产、主体以及允许的动作，再写你假设的威胁和依赖的机制。例如同一份数据可以在传输中加密，同时在应用里按用户授权、在生成回答时约束可引用来源。</p><h3>可复现课题</h3><p>挑一个虚构场景，画出数据流与信任边界。为每个控制写下预期的拒绝和允许条件。比较删去单一控制前后的行为，分别记录明显拒绝、误拒、证据不足和事后能否追踪。长期保密场景还可以比较不同协议方案的通信开销、密钥长度与互操作要求。</p><p class="sources"><a href="../crypto/">实际试算 AES、RSA、摘要与签名</a> · <a href="../ai-security/">实际试做大模型权限沙盒</a></p></section></main>
-<footer><a href="/explore/">返回实验目录</a><a href="../ai-security/">下一站 · 模型读到了，谁授权它行动？</a></footer>
-</body></html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="从古典密码到公钥、TLS、零信任和大模型安全。按历史节点理解攻击、防护和控制边界。">
+  <title>安全技术是在保护什么？ · 从现象到研究</title>
+  <link rel="canonical" href="https://chenyueqi2024.github.io/explore/security-history/">
+  <link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body class="lab security-lab">
+<header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+  <section class="intro">
+    <h1>安全技术是在保护什么？</h1>
+    <p class="lead">从不让人读懂密文，到确认网站身份、约束软件更新，再到限制能读资料和调用工具的模型。每到一个时期，都问一次：有谁需要被信任，凭什么相信？</p>
+  </section>
+  <nav class="lesson-nav" aria-label="本页目录"><a href="#principles">密码与保密</a><a href="#era-2">网络与身份</a><a href="#supply-chain">供应链与迁移</a><a href="#era-5">大模型时代</a></nav>
+  <noscript><p class="readout">启用 JavaScript 可按任务定位相关技术。时间线和文献仍可直接阅读。</p></noscript>
+  <section class="lab-work" aria-labelledby="choice-title">
+    <h2 id="choice-title">如果你负责这件事，先保护哪里？</h2>
+    <p>选一个任务，看看首先需要哪项控制，还有哪些判断要交给别的环节。</p>
+    <div class="lab-actions" id="history-controls" hidden role="group" aria-label="安全任务"></div>
+    <p id="history-result" class="readout" role="status" hidden></p>
+    <p id="history-jump" hidden><a href="#principles">跳到相关技术</a></p>
+  </section>
+  <section class="lab-work" aria-labelledby="timeline-title">
+    <h2 id="timeline-title">从保密电报到能执行任务的系统</h2>
+    <p>日期是代表性论文或标准的时间。密码原语、协议、系统管理和运营防御一直并行发展，一代控制常会在新的环境中继续使用。</p>
+    <ol class="security-flow security-timeline">
+      <li id="principles">
+        <p class="topic">古典密码 → 1949 · 保密成为可分析的问题</p>
+        <h3>只拿到密文，能推测出什么？</h3>
+        <p>古典替换密码把字母换成别的符号，仍会留下语言统计特征。频率分析说明，密文看起来陌生，并不足以证明它保密。Shannon 把消息、密钥和对手知道的信息纳入形式化模型，提出了完美保密的条件。</p>
+        <p><strong>防御思路</strong>　明确对手能看到什么，用公开分析的算法和独立生成的密钥。现代工程通常在规定的计算能力和攻击模型下评估安全。</p>
+        <p class="sources"><a href="https://doi.org/10.1002/j.1538-7305.1949.tb00928.x">Shannon · Communication Theory of Secrecy Systems</a></p>
+      </li>
+      <li id="era-0">
+        <p class="topic">1976 · 公钥密码</p>
+        <h3>没见过面，怎么建立共享秘密？</h3>
+        <p>Diffie 与 Hellman 给出在公开信道上协商共享秘密的方案。公钥密码随后发展出加密、签名和密钥协商等原语。协商若缺乏身份认证，中间人可能分别与两侧建立连接，让通信双方误以为正直接交谈。</p>
+        <p><strong>防御思路</strong>　用可信公钥、证书和经过验证的握手协议把密钥协商与对端身份绑定。</p>
+        <p class="sources"><a href="https://ee.stanford.edu/~hellman/publications/24.pdf">Diffie 与 Hellman · New Directions in Cryptography</a></p>
+      </li>
+      <li id="era-1">
+        <p class="topic">2001–2007 · 对称加密与认证</p>
+        <h3>能加密，还能发现改动吗？</h3>
+        <p>AES 标准化了块密码，GCM 将保密和完整性认证结合起来。现实故障常发生在原语与程序的接缝，例如同一把 AES-GCM 密钥重复使用 nonce，或应用在认证失败后仍处理输出。</p>
+        <p><strong>防御思路</strong>　使用成熟库，按协议管理密钥与 nonce，并把认证失败当作拒绝。口令数据库的场景还要考虑离线猜测，采用盐与适当成本的口令哈希。</p>
+        <p class="sources"><a href="https://csrc.nist.gov/pubs/sp/800/38/d/final">NIST · GCM 规范</a> · <a href="../crypto/#guide">动手比较加密、摘要与验签</a></p>
+      </li>
+      <li id="encrypted-compute">
+        <p class="topic">2009 · 全同态加密</p>
+        <h3>计算服务也必须打开原始数据吗？</h3>
+        <p>Gentry 的工作让通用计算可以在密文上表达，为委托计算改写了保密边界。应用中还要考虑授权解密的结果会透露多少信息，以及服务方是否确实执行了约定计算。</p>
+        <p><strong>防御思路</strong>　把输入保密、输出可见范围和验证计算正确性分别设计。限制结果的分组粒度和查询范围，再评估误差、延迟与密文开销。</p>
+        <p class="sources"><a href="https://crypto.stanford.edu/craig/">Gentry · 论文与博士论文</a> · <a href="../homomorphic/">在浏览器里试算密文</a></p>
+      </li>
+      <li id="era-2">
+        <p class="topic">2018 · TLS 1.3 与服务身份</p>
+        <h3>我连的是自己要找的那台服务吗？</h3>
+        <p>TLS 1.3 的典型证书握手把密钥协商、服务身份校验和记录保护连起来。钓鱼站点也可能拥有自己域名的有效证书。认证过的密文在某些场景还面临重放，例如 TLS 1.3 的 0-RTT 早期数据。</p>
+        <p><strong>防御思路</strong>　校验证书链和目标域名。账号使用抗钓鱼认证，敏感或改变状态的操作采用适当的重放防护，避免把可重放的早期数据直接当作一次全新操作。</p>
+        <p class="sources"><a href="https://www.rfc-editor.org/rfc/rfc9846.html">RFC 9846 · TLS 1.3</a> · <a href="https://pages.nist.gov/800-63-4/sp800-63b/authenticators/">NIST · 数字身份与认证器</a> · <a href="../network-trust/#tls">切换 HTTPS 观察位置</a></p>
+      </li>
+      <li id="era-3">
+        <p class="topic">2020 · 零信任与资源授权</p>
+        <h3>进了内网，能访问任何资源吗？</h3>
+        <p>网络边界可以过滤流量，但凭据被盗、内部设备失陷或应用授权有缺陷时，流量来自内网也不能证明它符合权限。零信任架构把判定推进到主体、设备、资源和具体请求。</p>
+        <p><strong>防御思路</strong>　结合网络分段、最小权限、服务端逐请求授权与日志。将访问异常和服务故障区分开。网络过载也需监测容量和可用性，单靠加密无法恢复服务。</p>
+        <p class="sources"><a href="https://csrc.nist.gov/pubs/sp/800/207/final">NIST SP 800-207 · 零信任架构</a> · <a href="../network-basics/#risks">网络攻击与防护对照</a></p>
+      </li>
+      <li id="supply-chain">
+        <p class="topic">2022 · 软件供应链与安全开发</p>
+        <h3>从依赖到更新，交付链上谁能改东西？</h3>
+        <p>用户可能从可信渠道安装更新，风险却已经出现在上游依赖、构建或发布环节。安全开发框架把职责延伸到来源追踪、构建过程、发布保护和漏洞响应。</p>
+        <p><strong>防御思路</strong>　分开保护构建与签名权限，验证产物来源和签名，维护组件清单与回滚能力。签名能绑定身份和产物，审查与测试仍要判断产物内容是否可信。</p>
+        <p class="sources"><a href="https://csrc.nist.gov/pubs/sp/800/218/final">NIST SP 800-218 · 安全软件开发框架</a></p>
+      </li>
+      <li id="era-4">
+        <p class="topic">2024 · 后量子密码</p>
+        <h3>对手的计算能力变了，密码怎么迁移？</h3>
+        <p>今天截留的加密流量在未来仍可能包含有价值的信息。NIST 标准化了用于建立共享秘密的 ML-KEM 和用于数字签名的 ML-DSA。长期保密与长期验证需要分别盘点机制、寿命和部署依赖。</p>
+        <p><strong>防御思路</strong>　先做密码资产清单，识别需要长期保护的数据与公钥依赖，再验证互操作、性能、更新与回退策略。</p>
+        <p class="sources"><a href="https://csrc.nist.gov/pubs/fips/203/final">NIST FIPS 203 · ML-KEM</a> · <a href="https://csrc.nist.gov/pubs/fips/204/final">NIST FIPS 204 · ML-DSA</a></p>
+      </li>
+      <li id="era-5">
+        <p class="topic">2024 年以来 · 生成式 AI、检索与工具</p>
+        <h3>能读资料的模型，谁授权它行动？</h3>
+        <p>训练语料、模型组件、检索文档和生成结果都进入安全边界。间接提示注入发生在不可信资料影响模型任务时。工具会进一步扩大影响，例如候选请求能触发真实写入或数据传输。</p>
+        <p><strong>防御思路</strong>　检索前按用户权限过滤资料，保留证据来源，把输出作为不可信数据处理。外部服务独立判断工具请求的身份、动作和对象，对高影响请求确认并留下可审计的决策记录。</p>
+        <p class="sources"><a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">NIST AI 600-1 · 生成式 AI 风险管理</a> · <a href="https://csrc.nist.gov/pubs/ai/100/2/e2025/final">NIST · 对抗机器学习分类</a> · <a href="../ai-security/#lifecycle">查看模型生命周期里的风险</a></p>
+      </li>
+    </ol>
+  </section>
+  <section id="research" class="lab-research">
+    <h2>把安全目标写成可以测试的条件</h2>
+    <p>挑一份虚构的内部资料，画出上传、存储、检索、回答和分享的数据流。给每条边写明主体、资源和允许的动作，再给每项控制写一个应放行和一个应拒绝的例子。</p>
+    <p>在本专题的模拟器中每次只改变一项控制，记录资料是否进入上下文、操作被谁拒绝、正常请求有没有误拒，以及事后能否从日志区分原因。这样可以区分传输加密、业务权限和工具授权各自承担的任务。</p>
+  </section>
+</main>
+<footer><a href="../#security">返回实验目录</a><a href="../ai-security/">下一站 · 模型读到了，谁授权它行动？</a></footer>
+</body>
+</html>
