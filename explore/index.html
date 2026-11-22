@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Yueqi 的交互实验目录。从双目视觉、轨迹误差和傅里叶变换，到扩散模型、配对评估与 RAG，找到动手实验、实际应用和研究导读。">
+  <meta name="description" content="Yueqi 的交互实验目录。从双目视觉、轨迹误差和傅里叶变换，到扩散模型、信息安全与 RAG，找到动手实验、实际应用和研究导读。">
   <meta name="theme-color" content="#eef3ef">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://chenyueqi2024.github.io/explore/">
@@ -22,10 +22,10 @@
       </div>
     </section>
     <div class="directory-tools">
-      <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习、生成与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a></nav>
+      <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习、生成与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a><a href="#security">网络与信息安全</a></nav>
       <div class="search" hidden>
         <label for="experiment-query">搜索实验或关键词</label>
-        <input id="experiment-query" type="search" placeholder="如 SLAM、RAG、UMAP">
+        <input id="experiment-query" type="search" placeholder="如 SLAM、RAG、AES">
         <p id="search-status" role="status"></p>
       </div>
     </div>
@@ -155,6 +155,29 @@
           <h3>高两个百分点，真的有进步吗？</h3>
           <p>固定两个模型对同一批帧的预测，增加重复帧或独立片段，对照逐帧与按片段重采样的差值区间。</p>
           <ul class="links"><li><a href="paired-evaluation/">比较两种抽样单位</a></li><li><a href="paired-evaluation/#research">原理与研究练习</a></li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="chapter" id="security" aria-labelledby="security-title">
+      <div class="chapter-heading"><h2 id="security-title">网络与信息安全</h2><p>从保护一段消息到给系统划清信任边界，追问谁能读、谁能改、谁能行动。</p></div>
+      <div class="shelf">
+        <article class="tile" data-search="密码学 网安 加密 AES GCM RSA OAEP SHA-256 ECDSA 签名 hash 哈希 ChaCha">
+          <p class="topic">密码学</p>
+          <h3>加密、哈希和签名，各自保护什么？</h3>
+          <p>实际运行 AES-GCM、RSA 混合加密、SHA-256 与 ECDSA。修改一位或一个字符，核对各自会怎样响应。</p>
+          <ul class="links"><li><a href="crypto/">试算与核验</a></li><li><a href="crypto/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="安全技术 网安 TLS 零信任 后量子 密码 ML-KEM ML-DSA NIST 加密 密钥 演进">
+          <p class="topic">安全技术演进</p>
+          <h3>安全技术是在保护什么？</h3>
+          <p>从公开信道协商密钥，跟到 TLS、零信任、后量子密码和生成式 AI。选一个安全目标，回看它依赖的技术。</p>
+          <ul class="links"><li><a href="security-history/">按安全目标浏览</a></li><li><a href="security-history/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="大模型安全 RAG 网安 提示注入 工具权限 最小权限 agent 智能体 过度代理 授权">
+          <p class="topic">大模型安全</p>
+          <h3>模型读到了，谁授权它行动？</h3>
+          <p>在虚构的 RAG 沙盒中切换身份和前置权限，核对资料能不能读、答案能不能用、操作能不能做。</p>
+          <ul class="links"><li><a href="ai-security/">逐层检查权限</a></li><li><a href="ai-security/#research">原理与研究练习</a></li></ul>
         </article>
       </div>
     </section>
