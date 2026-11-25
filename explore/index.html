@@ -25,7 +25,7 @@
       <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习、生成与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a><a href="#security">网络与信息安全</a></nav>
       <div class="search" hidden>
         <label for="experiment-query">搜索实验或关键词</label>
-        <input id="experiment-query" type="search" placeholder="如 SLAM、RAG、AES">
+        <input id="experiment-query" type="search" placeholder="如 SLAM、RL、RAG、AES">
         <p id="search-status" role="status"></p>
       </div>
     </div>
@@ -72,8 +72,14 @@
       </div>
     </section>
     <section class="chapter" id="reliability" aria-labelledby="reliability-title">
-      <div class="chapter-heading"><h2 id="reliability-title">模型学习、生成与可靠性</h2><p>让同一个分类器在不同环境里答题，检查它依据什么判断、给出的把握能不能信。</p></div>
+      <div class="chapter-heading"><h2 id="reliability-title">模型学习、生成与可靠性</h2><p>改变训练条件、奖励或采样过程，观察模型怎样学习、生成和决策。</p></div>
       <div class="shelf">
+        <article class="tile" id="reinforcement-learning" data-search="RL Reinforcement Learning 强化学习 多臂老虎机 bandit Q-learning DQN PPO 探索与利用 奖励设计 奖励投机 RLHF">
+          <p class="topic">强化学习（RL）</p>
+          <h3>智能体是怎样学会决策的？</h3>
+          <p>先用多臂老虎机比较探索与利用，再回放迷宫中的 Q 值更新，最后检查代理奖励会不会让策略偏离真正目标。</p>
+          <ul class="links"><li><a href="/model-mechanics/rl/">进入强化学习专题</a></li><li><a href="/model-mechanics/rl/#gridworld">回放 Q-learning</a></li><li><a href="/model-mechanics/rl/#reward-design">试调奖励权重</a></li></ul>
+        </article>
         <article class="tile" data-search="捷径学习 CNN Waterbirds Group DRO DFR 稳健性 偏差 泛化 VLM 域迁移">
           <p class="topic">数据偏差</p>
           <h3>换个背景，它还认得吗？</h3>
@@ -115,11 +121,11 @@
           <p>调整切块、排序与上下文预算，观察相关资料在哪一步丢失。移走新规或跨文档证据，检查回答能否正确拒答。</p>
           <ul class="links"><li><a href="/model-evidence-labs/rag/">动手查一条规定</a></li><li><a href="/model-evidence-labs/rag/#research">阅读 RAG 研究导读</a></li></ul>
         </article>
-        <article class="tile" data-search="Model Mechanics 分词 Token 注意力 Self-attention 课程学习 监督学习 图文检索 强化学习 RL 多臂老虎机 bandit Q-learning DQN PPO 探索与利用 奖励设计 奖励投机 RLHF 卷积 Patch Embedding">
+        <article class="tile" data-search="Model Mechanics 分词 Token 注意力 Self-attention 课程学习 监督学习 图文检索 卷积 Patch Embedding">
           <p class="topic">基础课程</p>
           <h3>动手拆解机器学习</h3>
           <p>Model Mechanics 的 19 个实验，从 BPE 和语言 Transformer 走到 Patch Lens、ViT、训练与泛化，再到 MoE、GNN 和强化学习。</p>
-          <ul class="links"><li><a href="/model-mechanics/index.html">浏览 19 个实验</a></li><li><a href="/model-mechanics/retrieval/">做图文检索</a></li><li><a href="/model-mechanics/rl/">进入强化学习专题</a></li></ul>
+          <ul class="links"><li><a href="/model-mechanics/index.html">浏览 19 个实验</a></li><li><a href="/model-mechanics/retrieval/">做图文检索</a></li></ul>
         </article>
         <article class="tile" data-search="RAG 表格 数值 推理 检索 引用 FinQA T2-RAGBench 缺证据">
           <p class="topic">表格 RAG</p>
