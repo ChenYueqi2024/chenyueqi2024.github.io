@@ -75,6 +75,7 @@ h1 {font-size:clamp(2.5rem,7vw,6.3rem);letter-spacing:-.07em;line-height:1.03}
 .links a {font-size:.94rem;display:inline-block;padding:3px 0}
 .links li:first-child a {font-weight:750}
 footer {border-top:1px solid var(--border);border-bottom:0;margin-top:32px;padding-bottom:25px}
+@media(min-width:980px) {.chapter .shelf {grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:680px) {
   .top,main,footer {width:calc(100% - 28px)}
   .intro {grid-template-columns:1fr;padding:30px 0 24px;gap:14px}
