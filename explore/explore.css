@@ -35,6 +35,9 @@ h1 {font-size:clamp(2.5rem,7vw,6.3rem);letter-spacing:-.07em;line-height:1.03}
   background:var(--accent);color:white;font-weight:700;text-decoration:none;
 }
 .jump:hover {background:#084e43;color:white}
+.intro-actions {display:flex;flex-wrap:wrap;gap:8px 10px}
+.jump.secondary {background:#fff;color:var(--accent);border:1px solid var(--border)}
+.jump.secondary:hover {border-color:var(--accent);color:#084e43}
 .directory-tools {
   border-block:1px solid var(--border);padding:14px 0;display:flex;
   align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 22px;

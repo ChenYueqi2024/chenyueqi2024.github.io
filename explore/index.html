@@ -18,7 +18,7 @@
       <h1 id="page-title">从现象<br class="desktop-break">到研究<span>。</span></h1>
       <div>
         <p class="lead">挑一个让你好奇的现象，动手改一个条件。看懂结果后，再去读它怎样用于真实任务，研究者又在尝试解决什么。</p>
-        <a class="jump" href="#vision">浏览实验目录</a>
+        <div class="intro-actions"><a class="jump" href="#vision">浏览实验目录</a><a class="jump secondary" href="#security">网络与信息安全</a></div>
       </div>
     </section>
     <div class="directory-tools">
@@ -138,8 +138,8 @@
           <img class="catalog-figure" src="illustrations/mechanics.webp" alt="语言 token 与视觉图块进入同一套计算模块" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">基础课程</p>
           <h3>动手拆解机器学习</h3>
-          <p>Model Mechanics 的 26 个实验，从 BPE 和语言 Transformer 走到 Patch Lens、ViT、训练与泛化，再到 MoE、GNN 和强化学习。</p>
-          <ul class="links"><li><a href="/model-mechanics/index.html">浏览 26 个实验</a></li><li><a href="/model-mechanics/#routing">专家路由</a></li><li><a href="/model-mechanics/#graphs">图神经网络</a></li><li><a href="/model-mechanics/retrieval/">做图文检索</a></li></ul>
+          <p>Model Mechanics 的 28 个实验，从 BPE 和语言 Transformer 走到 Patch Lens、ViT、训练与泛化，再到 MoE、GNN 和强化学习。</p>
+          <ul class="links"><li><a href="/model-mechanics/index.html">浏览 28 个实验</a></li><li><a href="/model-mechanics/#routing">专家路由</a></li><li><a href="/model-mechanics/#graphs">图神经网络</a></li><li><a href="/model-mechanics/retrieval/">做图文检索</a></li></ul>
         </article>
         <article class="tile" data-search="RAG 表格 数值 推理 检索 引用 FinQA T2-RAGBench 缺证据">
           <img class="catalog-figure" src="illustrations/table-rag.webp" alt="表格中的一行和脚注向模型提供算式所需证据" width="720" height="380" loading="lazy" decoding="async">
@@ -180,6 +180,20 @@
           <h3>模型分数多少才放行？</h3>
           <p>固定分类分数，只改阈值、阳性基率和漏报代价。通过混淆矩阵检查误报与漏报的取舍。</p>
           <ul class="links"><li><a href="/model-mechanics/threshold/">试调分类阈值</a></li><li><a href="/model-mechanics/threshold/#research">设计评估对照</a></li></ul>
+        </article>
+        <article class="tile" data-search="分类评估 ROC PR AUC AP 精确率 召回率 基率 不平衡 曲线">
+          <img class="catalog-figure" src="illustrations/classification-curves.webp" alt="两种阳性基率的 ROC 曲线重合，而两条 PR 曲线分开" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">ROC、PR 与类别不平衡</p>
+          <h3>同一个模型，为什么 ROC 与 PR 的结论不同？</h3>
+          <p>固定模型得分，扫描阈值并改变阳性基率，对照误报率、召回率和精确率。</p>
+          <ul class="links"><li><a href="/model-mechanics/classification-curves/">比较 ROC 与 PR</a></li><li><a href="/model-mechanics/classification-curves/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="分组误差 阈值 复核预算 召回率 漏检 错误分析 分组公平">
+          <img class="catalog-figure" src="illustrations/review-budget.webp" alt="两条产线按不同阈值送检，待复核数量与人工名额对照" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">分组误差与复核预算</p>
+          <h3>同一个阈值，为什么两条产线的漏检差这么多？</h3>
+          <p>比较统一与分组阈值，检查召回差距缩小后，待复核数量会不会超出预算。</p>
+          <ul class="links"><li><a href="/model-mechanics/review-budget/">分配人工复核名额</a></li><li><a href="/model-mechanics/review-budget/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="Bootstrap 置信区间 配对 评估 抽样 复现 假重复 统计">
           <img class="catalog-figure" src="illustrations/paired-evaluation.webp" alt="两个区间对照显示逐帧与按片段重采样的差异" width="720" height="380" loading="lazy" decoding="async">
