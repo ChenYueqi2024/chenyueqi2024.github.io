@@ -34,36 +34,42 @@
       <div class="chapter-heading"><h2 id="vision-title">视觉几何与图像信号</h2><p>从一对照片和一段视频入手，追问我们究竟能从像素恢复什么。</p></div>
       <div class="shelf">
         <article class="tile" data-search="视差 双目 深度 视角游乐场 Viewpoint Playground NeRF 3DGS DUSt3R VGGT SfM MVS 世界模型">
+          <img class="catalog-figure" src="illustrations/stereo.webp" alt="两台相机沿不同视线看到同一个目标，视差随深度变化" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">双目测距</p>
           <h3>为什么远处的深度更难测准？</h3>
           <p>拖动相机与目标，改变基线和测量噪声。再沿着双目几何读到多视角重建、神经渲染与三维生成。</p>
           <ul class="links"><li><a href="/viewpoint-playground/#play">动手测深度</a></li><li><a href="/viewpoint-playground/#research">阅读研究导览</a></li></ul>
         </article>
         <article class="tile" data-search="Middlebury 对应点 遮挡 视差 stereo 匹配 像素 实拍">
+          <img class="catalog-figure" src="illustrations/stereo-photo.webp" alt="左右两幅场景图中的一个对应点由虚线连接" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">真实双目</p>
           <h3>两张照片里，怎样找到同一个点？</h3>
           <p>在车库实拍中匹配一个细节。把右图落点移一像素，比较近景与远景的深度误差，再检查有遮挡的像素。</p>
           <ul class="links"><li><a href="/viewpoint-playground/photo/">匹配真实照片</a></li><li><a href="/viewpoint-playground/photo/#method">查看标定与数据</a></li></ul>
         </article>
         <article class="tile" data-search="轨迹 回放 TUM SLAM 漂移 RANSAC PnP VIO 野外 WildPose VGGT ATE RPE">
+          <img class="catalog-figure" src="illustrations/trajectory.webp" alt="参考轨迹和带漂移的轨迹随时间逐渐分离" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">相机位姿</p>
           <h3>路线平移了，还是相机越走越偏？</h3>
           <p>回放真实画面，对照参考轨迹与人为加入的偏移。从控制点和 RANSAC 读到回环、视觉惯性融合与动态场景中的位姿估计。</p>
           <ul class="links"><li><a href="/trajectory-replay/#workbench">回放与对齐</a></li><li><a href="/trajectory-replay/#error-shapes">误差的真实来源</a></li><li><a href="/trajectory-replay/#method-route">位姿方法演进</a></li></ul>
         </article>
         <article class="tile" data-search="FFT 频谱 信号处理 Fourier 配准 周期 条纹 FDA LaMa FNO DiffFNO FraIR 超分辨率">
+          <img class="catalog-figure" src="illustrations/fourier.webp" alt="条纹图像对应频谱上成对出现的峰" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">傅里叶变换</p>
           <h3>互换频谱以后，你还认得谁？</h3>
           <p>比较幅度与相位交换后的图像，再让相位相关找回平移。重复条纹会给出多个候选。</p>
           <ul class="links"><li><a href="/model-evidence-labs/fourier/">交换频谱</a></li><li><a href="/model-evidence-labs/fourier/#registration-title">试做图像配准</a></li><li><a href="/model-evidence-labs/fourier/#research">从配准到频域学习</a></li></ul>
         </article>
         <article class="tile" data-search="三维重建 缺视角 视觉外壳 visual hull 体素 IoU RegNeRF">
+          <img class="catalog-figure" src="illustrations/hull.webp" alt="从三个方向投出的轮廓用来限制体素的位置" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">视觉外壳</p>
           <h3>轮廓相同，形状就相同吗？</h3>
           <p>让多台相机拍同一个物体，再用轮廓削掉不可能的空间。切开重建结果，核对它有没有恢复凹槽。</p>
           <ul class="links"><li><a href="hull/">重建并切开剖面</a></li><li><a href="hull/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="SLAM 位姿图 回环 图优化 pose graph g2o ORB-SLAM 轨迹 漂移">
+          <img class="catalog-figure" src="illustrations/pose-graph.webp" alt="轨迹的首尾被一条回环边连接，优化后形状收拢" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">回环与位姿图</p>
           <h3>相机回到原地，中途的路为什么变了？</h3>
           <p>逐帧累加含噪运动，再加入正确或错误的回环，观察整条路线怎样重新分配误差。</p>
@@ -75,36 +81,42 @@
       <div class="chapter-heading"><h2 id="reliability-title">模型学习、生成与可靠性</h2><p>改变训练条件、奖励或采样过程，观察模型怎样学习、生成和决策。</p></div>
       <div class="shelf">
         <article class="tile" id="reinforcement-learning" data-search="RL Reinforcement Learning 强化学习 多臂老虎机 bandit Q-learning DQN PPO 探索与利用 奖励设计 奖励投机 RLHF">
+          <img class="catalog-figure" src="illustrations/rl.webp" alt="迷宫的近路与远路各自通往不同奖励" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">强化学习（RL）</p>
           <h3>智能体是怎样学会决策的？</h3>
           <p>先弄清状态、动作、奖励与策略，算一次长期回报。再比较探索策略、回放迷宫里的 Q 值更新，检查代理奖励会不会让策略偏离目标。</p>
-          <ul class="links"><li><a href="/model-mechanics/rl/">进入强化学习专题</a></li><li><a href="/model-mechanics/rl/#gridworld">回放 Q-learning</a></li><li><a href="/model-mechanics/rl/#reward-design">试调奖励权重</a></li></ul>
+          <ul class="links"><li><a href="/model-mechanics/rl/">进入强化学习专题</a></li><li><a href="/model-mechanics/rl/#gridworld">回放 Q-learning</a></li><li><a href="/model-mechanics/rl/#reward-design">试调奖励权重</a></li><li><a href="/model-mechanics/rl-offline/">检查离线日志覆盖</a></li></ul>
         </article>
         <article class="tile" data-search="捷径学习 CNN Waterbirds Group DRO DFR 稳健性 偏差 泛化 VLM 域迁移">
+          <img class="catalog-figure" src="illustrations/shortcut.webp" alt="训练时形状与背景相关，测试时交换背景" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">数据偏差</p>
           <h3>换个背景，它还认得吗？</h3>
           <p>保留形状，只换颜色，再训练同一卷积网络。比较总体准确率、最差组准确率，以及改变测试环境后的表现。</p>
           <ul class="links"><li><a href="/model-evidence-labs/">换背景并训练</a></li><li><a href="/model-evidence-labs/#mix-title">改变测试环境</a></li><li><a href="/model-evidence-labs/#research">读稳健性研究</a></li></ul>
         </article>
         <article class="tile" data-search="温度 缩放 校准 不确定性 可靠性图 ECE 共形预测 conformal 拒答 风险 分布漂移">
+          <img class="catalog-figure" src="illustrations/calibration.webp" alt="可靠性图用对角线对比模型置信度和实际正确率" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">置信度</p>
           <h3>九成把握，真的能对九成吗？</h3>
           <p>用上一站的分类器比较预测置信度与实际正确率。然后调整自动采用阈值，检查哪些样本需要转人工。</p>
           <ul class="links"><li><a href="/model-evidence-labs/calibration/">试做温度校准</a></li><li><a href="/model-evidence-labs/calibration/#threshold-title">按组看复核风险</a></li><li><a href="/model-evidence-labs/calibration/#research">读风险与共形预测</a></li></ul>
         </article>
         <article class="tile" data-search="主动学习 标注 数据效率 不确定性 Core-Set 样本 训练">
+          <img class="catalog-figure" src="illustrations/active-learning.webp" alt="分类边界附近的未标注点被优先选中" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">主动学习</p>
           <h3>只够标 20 张图，先标哪些？</h3>
           <p>用相同预算比较随机、最不确定、最远优先。加入边界旁的模糊样本，观察预算流向与测试准确率。</p>
           <ul class="links"><li><a href="active-learning/">分配标注预算</a></li><li><a href="active-learning/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="向量 向量检索 embedding PCA t-SNE UMAP Patch Lens 可视化 降维 最近邻">
+          <img class="catalog-figure" src="illustrations/embeddings.webp" alt="两个投影中的点群结构与近邻关系不同" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">降维与向量</p>
           <h3>二维图上挨得近，原向量也近吗？</h3>
           <p>固定图块描述，切换 PCA、t-SNE 和 UMAP。点选一个图块，比较原空间与二维图的最近邻。</p>
           <ul class="links"><li><a href="embeddings/">比较三个投影</a></li><li><a href="embeddings/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="扩散 生成模型 DDPM score guidance 概率流 去噪 扩散模型 采样 引导">
+          <img class="catalog-figure" src="illustrations/diffusion.webp" alt="随机点云经过逐步去噪形成四个点团" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">扩散模型</p>
           <h3>一团噪声，怎样长出结构？</h3>
           <p>拖动加噪与去噪时间轴。固定起始随机噪声，比较不同采样步数和条件引导强度下的结果。</p>
@@ -116,24 +128,28 @@
       <div class="chapter-heading"><h2 id="language-title">语言、检索与证据</h2><p>从模型怎样处理输入，到回答出现时怎样检查它的依据。</p></div>
       <div class="shelf">
         <article class="tile" data-search="RAG 检索增强生成 BM25 向量检索 DPR Self-RAG 引用 评测 Top-K 两跳 ALCE 文献">
+          <img class="catalog-figure" src="illustrations/rag.webp" alt="查询先找到多份证据，再把相关证据连到回答" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">RAG</p>
           <h3>答案有出处吗？</h3>
           <p>调整切块、排序与上下文预算，观察相关资料在哪一步丢失。移走新规或跨文档证据，检查回答能否正确拒答。</p>
           <ul class="links"><li><a href="/model-evidence-labs/rag/">动手查一条规定</a></li><li><a href="/model-evidence-labs/rag/#research">阅读 RAG 研究导读</a></li></ul>
         </article>
         <article class="tile" data-search="Model Mechanics 分词 Token 注意力 Self-attention 课程学习 监督学习 图文检索 卷积 Patch Embedding">
+          <img class="catalog-figure" src="illustrations/mechanics.webp" alt="语言 token 与视觉图块进入同一套计算模块" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">基础课程</p>
           <h3>动手拆解机器学习</h3>
-          <p>Model Mechanics 的 19 个实验，从 BPE 和语言 Transformer 走到 Patch Lens、ViT、训练与泛化，再到 MoE、GNN 和强化学习。</p>
-          <ul class="links"><li><a href="/model-mechanics/index.html">浏览 19 个实验</a></li><li><a href="/model-mechanics/retrieval/">做图文检索</a></li></ul>
+          <p>Model Mechanics 的 26 个实验，从 BPE 和语言 Transformer 走到 Patch Lens、ViT、训练与泛化，再到 MoE、GNN 和强化学习。</p>
+          <ul class="links"><li><a href="/model-mechanics/index.html">浏览 26 个实验</a></li><li><a href="/model-mechanics/#routing">专家路由</a></li><li><a href="/model-mechanics/#graphs">图神经网络</a></li><li><a href="/model-mechanics/retrieval/">做图文检索</a></li></ul>
         </article>
         <article class="tile" data-search="RAG 表格 数值 推理 检索 引用 FinQA T2-RAGBench 缺证据">
+          <img class="catalog-figure" src="illustrations/table-rag.webp" alt="表格中的一行和脚注向模型提供算式所需证据" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">表格 RAG</p>
           <h3>RAG 找到表格，能算对吗？</h3>
           <p>从报告中保留或移除年份行、表头和脚注，核对答案用的是实付还是预算，单位与算式是否正确。</p>
           <ul class="links"><li><a href="table-rag/">沿证据复算</a></li><li><a href="table-rag/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="RAG ANN HNSW 向量检索 近似近邻 向量索引 召回 证据 索引">
+          <img class="catalog-figure" src="illustrations/vector-search.webp" alt="近邻图中一条查询路径逐步接近目标节点" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">向量索引</p>
           <h3>少算几次距离，会漏掉什么？</h3>
           <p>在近邻图中花有限预算寻找候选，与全量扫描的精确前十比较，再检查 RAG 所需的证据是否还在。</p>
@@ -145,18 +161,28 @@
       <div class="chapter-heading"><h2 id="practice-title">研究实践</h2><p>从现象和方法回到自己的数据，检查开始实验前有哪些假设已经被破坏。</p></div>
       <div class="shelf">
         <article class="tile" data-search="Multiview Check 数据集 内参 外参 相机 时间戳 图像 COLMAP 异常报告">
+          <img class="catalog-figure" src="illustrations/multiview.webp" alt="相机视锥与逐项通过或待复查的数据检查单" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">多视角数据体检</p>
           <h3>为什么重建之前要先检查数据？</h3>
           <p>先读一份故意混入异常的示例报告，再检查自己的图像尺寸、相机内参、位姿和时间戳。</p>
           <ul class="links"><li><a href="/multiview-check/demo-report.html">查看异常报告</a></li><li><a href="/multiview-check/">检查自己的数据</a></li></ul>
         </article>
         <article class="tile" data-search="数据泄漏 复现 训练集 测试集 评估 近重复 分组 泄漏">
+          <img class="catalog-figure" src="illustrations/leakage.webp" alt="按帧划分和按场景划分使用不同的训练与测试分组" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">评估协议</p>
           <h3>同一批照片，换一种划分会怎样？</h3>
           <p>用近邻分类器比较按帧随机与整段留出。点开它借用的训练帧，核对测试中有没有熟悉场景。</p>
           <ul class="links"><li><a href="leakage/">对照两种划分</a></li><li><a href="leakage/#research">原理与研究练习</a></li></ul>
         </article>
+        <article class="tile" data-search="分类阈值 混淆矩阵 精确率 召回率 基率 误报 漏报 成本 threshold precision recall">
+          <img class="catalog-figure" src="illustrations/threshold.webp" alt="阳性和阴性分数分布由可移动的阈值线切分" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">分类阈值与代价</p>
+          <h3>模型分数多少才放行？</h3>
+          <p>固定分类分数，只改阈值、阳性基率和漏报代价。通过混淆矩阵检查误报与漏报的取舍。</p>
+          <ul class="links"><li><a href="/model-mechanics/threshold/">试调分类阈值</a></li><li><a href="/model-mechanics/threshold/#research">设计评估对照</a></li></ul>
+        </article>
         <article class="tile" data-search="Bootstrap 置信区间 配对 评估 抽样 复现 假重复 统计">
+          <img class="catalog-figure" src="illustrations/paired-evaluation.webp" alt="两个区间对照显示逐帧与按片段重采样的差异" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">配对评估</p>
           <h3>高两个百分点，真的有进步吗？</h3>
           <p>固定两个模型对同一批帧的预测，增加重复帧或独立片段，对照逐帧与按片段重采样的差值区间。</p>
@@ -168,48 +194,56 @@
       <div class="chapter-heading"><h2 id="security-title">网络与信息安全</h2><p>从网页请求与性能观测出发，理解网络信任边界，再看密码怎样保护通信、验证消息，以及如何在密文上计算。</p></div>
       <div class="shelf">
         <article class="tile" data-search="计算机网络 网安 OSI TCP/IP 协议栈 封装 Wi-Fi DHCP DNS ARP 路由 BGP TLS HTTP/2 HTTP/3 QUIC DDoS 网络攻击">
+          <img class="catalog-figure" src="illustrations/network-basics.webp" alt="终端、接入点、网关和站点串成请求路径" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">计算机网络基本知识</p>
           <h3>打开一个网页，数据会经过哪里？</h3>
           <p>跟着一次请求看设备和协议如何配合，比较 HTTP/2 与 HTTP/3。拆开包看逐跳转发，再根据观测记录排查网络与应用风险。</p>
           <ul class="links"><li><a href="network-basics/">走一遍网页请求</a></li><li><a href="network-basics/#risks">查看风险与防护</a></li><li><a href="network-basics/#diagnosis">练习定位问题</a></li></ul>
         </article>
         <article class="tile" data-search="性能 网络瀑布图 Waterfall TTFB 首字节 RTT DNS TCP TLS 缓存 延迟 时延 丢包 带宽 DevTools">
+          <img class="catalog-figure" src="illustrations/network-timing.webp" alt="多项网页资源按不同时间点开始和完成" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">请求瀑布图</p>
           <h3>为什么这个网页这么慢？</h3>
           <p>调节往返时延、服务器耗时与缓存。比较两次总耗时相近的加载，找到是文档来得慢，还是图片下得慢。</p>
           <ul class="links"><li><a href="network-timing/">动手读瀑布图</a></li><li><a href="network-timing/#research">用浏览器做实测</a></li></ul>
         </article>
         <article class="tile" data-search="DNS DNSSEC TTL DoH HTTPS TLS 证书 CDN 防火墙 VLAN 网络分段 应用授权 零信任">
+          <img class="catalog-figure" src="illustrations/network-trust.webp" alt="请求经过两条 TLS 连接，CDN 在中间终止加密" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">网络信任边界</p>
           <h3>连得上，为什么还不能信？</h3>
           <p>让 DNS 缓存过期，切换 HTTPS 的观测位置，再按访客、学生和运维身份逐层检查访问权限。</p>
           <ul class="links"><li><a href="network-trust/#dns">检查解析结果</a></li><li><a href="network-trust/#tls">看 HTTPS 保护范围</a></li><li><a href="network-trust/#segment">试做网络分段</a></li></ul>
         </article>
         <article class="tile" data-search="密码学 网安 加密 AES GCM RSA OAEP SHA-256 ECDSA 签名 hash 哈希 ChaCha">
+          <img class="catalog-figure" src="illustrations/crypto.webp" alt="同一条消息分别变成密文、摘要与签名" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">密码学入门</p>
           <h3>加密、哈希和签名，各自保护什么？</h3>
           <p>先分清明文、密钥、IV、标签和摘要，再实际运行 AES-GCM、RSA 混合加密、SHA-256 与 ECDSA。</p>
           <ul class="links"><li><a href="crypto/#guide">从四个问题学起</a></li><li><a href="crypto/#workbench">试算与核验</a></li><li><a href="crypto/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="全同态加密 同态加密 FHE HE DGHV BFV BGV CKKS TFHE 密文计算 隐私计算 自举 bootstrapping 噪声 乘法深度">
+          <img class="catalog-figure" src="illustrations/homomorphic.webp" alt="两份密文经云端相加得到仍加密的结果" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">全同态加密</p>
           <h3>看不见数据，也能算出结果？</h3>
           <p>自己算一次密文加法与乘法。增加初始扰动和乘法深度，看解密什么时候会出错，再理解为什么需要自举。</p>
           <ul class="links"><li><a href="homomorphic/">动手做密文计算</a></li><li><a href="homomorphic/#research">比较方案与研究问题</a></li></ul>
         </article>
         <article class="tile" data-search="安全技术 网安 Shannon 频率分析 中间人 重放 TLS 零信任 供应链 后量子 密码 ML-KEM ML-DSA NIST 加密 密钥 演进">
+          <img class="catalog-figure" src="illustrations/security-history.webp" alt="时间轴串联公钥密码、TLS、零信任与 AI 安全" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">安全技术演进</p>
           <h3>安全技术是在保护什么？</h3>
           <p>从古典密码、公钥和认证加密，走到 TLS、零信任、供应链和生成式 AI。沿时间线对照攻击方式、信任边界与防护。</p>
           <ul class="links"><li><a href="security-history/">按安全目标浏览</a></li><li><a href="security-history/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="大模型安全 RAG 网安 提示注入 数据投毒 供应链 泄露 输出处理 工具权限 最小权限 agent 智能体 过度代理 授权">
+          <img class="catalog-figure" src="illustrations/ai-security.webp" alt="文档经过检索和证据检查，工具操作另由授权关卡判断" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">大模型安全</p>
           <h3>模型读到了，谁授权它行动？</h3>
           <p>在虚构的 RAG 沙盒中切换身份和前置权限，核对资料能不能读、答案能不能用、操作能不能做。</p>
           <ul class="links"><li><a href="ai-security/">逐层检查权限</a></li><li><a href="ai-security/#lifecycle">看生命周期中的攻击与防护</a></li></ul>
         </article>
         <article class="tile" data-search="AI Safety 智能体安全评估 大模型评估 Agent TEVV 检索权限 RAG 数据曝光 误拒 越权放行 对照实验">
+          <img class="catalog-figure" src="illustrations/ai-safety-eval.webp" alt="三组对照条比较两套策略的曝光、越权和任务完成情况" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">AI 安全评估</p>
           <h3>智能体更安全了吗？</h3>
           <p>让两套权限策略处理同一批合成请求。逐案比较上下文曝光、越权放行与正常任务误拒，再换一组请求构成复查比例。</p>

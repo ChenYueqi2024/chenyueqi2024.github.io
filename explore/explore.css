@@ -83,3 +83,5 @@ footer {border-top:1px solid var(--border);border-bottom:0;margin-top:32px;paddi
   .shelf {grid-template-columns:1fr}
   .chapter {padding-top:28px}
 }
+
+.catalog-figure{display:block;width:100%;height:auto;aspect-ratio:720/380;border:1px solid #cfddde;border-radius:8px;margin-bottom:11px;background:#edf4f3}
