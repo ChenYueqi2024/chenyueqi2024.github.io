@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="用同一批合成案例评估 AI 智能体的检索权限、越权放行和正常任务完成率。">
+<title>智能体更安全了吗？ · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/ai-safety-eval/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css">
+<script type="module" src="app.mjs"></script>
+</head>
+<body class="lab security-lab">
+<header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">研究练习</a></header>
+<main>
+  <section class="intro"><h1>智能体更安全了吗？</h1><p class="lead">一次拒绝可能拦住越权，也可能挡住正常工作。让两套策略处理同一批请求，看看错误发生在检索阶段、操作阶段，还是正常任务被误拒。</p></section>
+  <section class="lab-work" aria-labelledby="lab-title">
+    <h2 id="lab-title">给安全策略做一次对照评估</h2>
+    <p>这是一组规则驱动的合成案例。每个案例预先标注允许还是拒绝。请求、资料和候选操作都只用抽象标签表示，页面只计算结果和指标。</p>
+    <noscript><p class="readout">启用 JavaScript 可运行对照评估。指标定义和研究练习仍可阅读。</p></noscript>
+    <div id="experiment" hidden>
+      <div class="lab-controls">
+        <label for="policy-a">策略 A <select id="policy-a"></select></label>
+        <label for="policy-b">策略 B <select id="policy-b"></select></label>
+        <label for="workload">请求构成 <select id="workload"></select></label>
+      </div>
+      <div id="scorecards" class="lesson-grid"></div>
+      <p id="summary" class="readout" role="status"></p>
+      <h3>逐案核对预期与结果</h3>
+      <p class="lesson-muted">次数表示同类案例在这组请求中的权重。窄屏可横向滑动表格。</p>
+      <div class="table-scroll" role="region" aria-label="评估结果表" tabindex="0">
+        <table class="lesson-table" style="min-width:38rem"><thead><tr><th scope="col">合成案例</th><th scope="col">次数</th><th scope="col">预期</th><th scope="col">策略 A</th><th scope="col">策略 B</th></tr></thead><tbody id="cases"></tbody></table>
+      </div>
+    </div>
+  </section>
+  <section class="lab-work">
+    <h2>三种错误要分别数</h2>
+    <div class="lesson-grid three">
+      <article class="lesson-card"><h3>上下文曝光</h3><p>分母是未授权资料成为检索候选的请求。分子是这些资料实际进入上下文的请求。拒绝后续操作也无法消除已经发生的曝光。</p></article>
+      <article class="lesson-card"><h3>越权放行</h3><p>分母是预期应拒绝的候选操作。分子是其中被放行的操作。操作换了目标时，按实际候选操作核对原来的确认范围。</p></article>
+      <article class="lesson-card"><h3>正常任务完成</h3><p>分母是预期应允许的请求，分子是放行的请求。把比较策略改成只读，观察它会误拒多少次已经授权的公开分享。</p></article>
+    </div>
+    <p>保持策略不变，把请求构成从「阅读居多」切到「分享频繁」。比例可能因案例组合不同而变化。比较防护效果时，要用同一批请求，并同时报告各组的分母。</p>
+  </section>
+  <section class="lab-research" id="research">
+    <h2>从教学模拟到可复现的评估</h2>
+    <ol class="lesson-list">
+      <li>先写清资产、用户角色、外部内容的信任级别，以及确认究竟覆盖哪个动作和对象。</li>
+      <li>给应放行与应拒绝的案例独立标注，保留版本。分别记录检索、授权和执行，确保能追到出错环节。</li>
+      <li>在实际实验环境中使用获准的测试系统和合成资料，固定模型与工具版本，重复运行，按任务类型报告波动与误拒。这里的确定性规则与计数用来讲解评估方法，不能直接当作实际模型的安全表现。</li>
+    </ol>
+    <p class="sources"><a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">NIST · 生成式 AI 风险管理</a> · <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">OWASP · 过度代理与工具权限</a> · <a href="https://arxiv.org/abs/2211.09110">Liang 等 · HELM 多指标评估</a></p>
+  </section>
+</main>
+<footer><a href="../#security">返回实验目录</a><a href="../ai-security/#sandbox">回到大模型权限沙盒</a><a href="/model-evidence-labs/calibration/">对照置信度与拒答实验</a></footer>
+</body>
+</html>
+
