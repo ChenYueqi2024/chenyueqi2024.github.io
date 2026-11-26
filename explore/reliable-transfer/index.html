@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="逐步回放一组数据段，观察累计 ACK、乱序缓存与超时重传。">
+<title>丢了一段数据，后面几段先到了怎么办？ · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/reliable-transfer/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><link rel="stylesheet" href="../systems-labs/labs.css">
+<script type="module" src="../systems-labs/app.mjs"></script>
+</head>
+<body class="lab security-lab" data-lab="reliable-transfer">
+<header class="top"><a class="wordmark" href="../#network">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+<section class="intro"><h1>丢了一段数据，后面几段先到了怎么办？</h1><p class="lead">假设发送方一次送出 5 个编号段，第二段在路上丢了，后面的段先到。接收方要怎样告诉发送方，它还在等哪一段？</p></section>
+<section class="lab-work" aria-labelledby="lab-title">
+  <h2 id="lab-title">做一次对照</h2><p>选择丢失第 2 段，点击「下一步」查看确认号。保留乱序缓存时，最后重传需要几段？再关闭缓存重做。</p>
+  <noscript><p class="readout">启用 JavaScript 可操作实验。下面的原理与参考资料仍可阅读。</p></noscript>
+  <div id="experiment" hidden>
+    <div class="lab-controls"><label for="missing">首次发送中丢失的段 <select id="missing"><option value="2">第 2 段</option><option value="4">第 4 段</option><option value="0">没有丢失</option></select></label>
+      <label><input type="checkbox" id="buffer" checked> 缓存乱序段</label>
+      <label for="step">回放进度 <input type="range" id="step" min="1" max="10" step="1" value="1"><output for="step" data-unit=""></output></label></div>
+    <div class="lab-actions"><button type="button" id="advance">下一步</button><button type="button" id="restart">重放</button></div>
+    <div id="visual"></div><p id="result" class="readout" role="status"></p>
+  </div>
+</section>
+<section class="lab-research" id="research"><h2>原理与研究练习</h2><p>确认号表示「我接下来需要的段」。接收方只有补齐缺口才能向前推进累计确认。示例把编号简化为段序号，每次超时后只重传最早未确认段，且重传必达。真实 TCP 使用字节序号，也可能使用快速重传与选择确认。</p><p>可靠传输负责正确交付。流量控制关注接收方能否接住数据，拥塞控制关注路径能否承受发送速率。实验分开观察这些机制，避免把同一个 ACK 信号当成三件事的同一个指标。</p><p class="sources"><a href="https://www.rfc-editor.org/rfc/rfc9293.html">RFC 9293 · TCP 序号与确认</a></p></section>
+</main>
+<footer><a href="../#network">返回实验目录</a><a href="../packet-forwarding/">回看上一项相关实验</a><a href="../congestion-queue/">下一项实验</a></footer>
+</body>
+</html>

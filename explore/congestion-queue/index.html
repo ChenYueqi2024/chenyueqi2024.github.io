@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="改变瓶颈速率与缓存，比较固定发送和简化 AIMD 的交付量、积压与丢弃。">
+<title>发得更多，为什么到得更慢？ · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/congestion-queue/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><link rel="stylesheet" href="../systems-labs/labs.css">
+<script type="module" src="../systems-labs/app.mjs"></script>
+</head>
+<body class="lab security-lab" data-lab="congestion-queue">
+<header class="top"><a class="wordmark" href="../#network">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+<section class="intro"><h1>发得更多，为什么到得更慢？</h1><p class="lead">一条链路每轮最多送出固定数量的数据，来得比它快时需要排队。扩大缓存或改变发送量，会怎样改写吞吐量、丢弃和积压？</p></section>
+<section class="lab-work" aria-labelledby="lab-title">
+  <h2 id="lab-title">做一次对照</h2><p>保持每轮只能交付 8 段，先增大队列容量，比较丢弃和积压。再比较固定发送与模拟 AIMD，注意更低的队列是否也伴随利用率变化。</p>
+  <noscript><p class="readout">启用 JavaScript 可操作实验。下面的原理与参考资料仍可阅读。</p></noscript>
+  <div id="experiment" hidden>
+    <div class="lab-controls"><label for="service">每轮链路容量 <input type="range" id="service" min="4" max="14" step="1" value="8"><output for="service" data-unit=" 段"></output></label>
+      <label for="queue">缓存容量 <input type="range" id="queue" min="0" max="30" step="1" value="10"><output for="queue" data-unit=" 段"></output></label>
+      <label for="round">查看第几轮 <input type="range" id="round" min="1" max="18" step="1" value="10"><output for="round" data-unit=""></output></label></div>
+    
+    <div id="visual"></div><p id="result" class="readout" role="status"></p>
+  </div>
+</section>
+<section class="lab-research" id="research"><h2>原理与研究练习</h2><p>两种策略均从每轮 12 段开始。每轮先接收上一轮积压与新增段，再服务至多链路容量，最后把超出缓冲容量的段丢弃。反馈策略遇丢弃把下轮发送量减半，否则加一。这里有一轮即时反馈，不模拟 RTT、重传、启动行为或多个流。</p><p>AIMD 展示了如何依反馈调整发送量；真实 TCP 有多种拥塞控制算法。这里用队列长度表示积压，不把它直接当成真实时延。比较缓冲方案时，应把丢包、实际交付量和延迟一起报告。</p><p class="sources"><a href="https://www.rfc-editor.org/info/rfc5681/">RFC 5681 · TCP 拥塞控制</a> · <a href="https://www.rfc-editor.org/info/rfc7567/">RFC 7567 · 主动队列管理</a></p></section>
+</main>
+<footer><a href="../#network">返回实验目录</a><a href="../reliable-transfer/">回看上一项相关实验</a><a href="../network-timing/">下一项实验</a></footer>
+</body>
+</html>

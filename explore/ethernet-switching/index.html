@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="从空的 MAC 地址表回放学习过程，再切换 VLAN，观察未知单播的范围。">
+<title>交换机第一次看到这个地址，会把帧送到哪里？ · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/ethernet-switching/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><link rel="stylesheet" href="../systems-labs/labs.css">
+<script type="module" src="../systems-labs/app.mjs"></script>
+</head>
+<body class="lab security-lab" data-lab="ethernet-switching">
+<header class="top"><a class="wordmark" href="../#network">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+<section class="intro"><h1>交换机第一次看到这个地址，会把帧送到哪里？</h1><p class="lead">三台教学主机和两台管理主机接在同一台虚构交换机上。它从空表开始，每收到一帧就记住源地址来自哪个端口。</p></section>
+<section class="lab-work">
+  <h2>第三帧和第一帧有什么不同？</h2><p>第 1 帧和第 3 帧都是 A 发给 B，中间插入一帧 B 回给 A。比较两次转发时的出端口。第 6 帧从教学主机 A 发给管理主机 C，再切换 VLAN 看看。</p>
+  <noscript><p class="readout">启用 JavaScript 可回放。下面的原理与参考资料仍可阅读。</p></noscript>
+  <div id="experiment" hidden>
+    <div class="lab-controls">
+      <label><input type="checkbox" id="vlan" checked> 将教学端口和管理端口放入两个 VLAN</label>
+      <label><input type="checkbox" id="swap"> 交换第 2 帧与第 3 帧</label>
+      <label for="frame">查看第几帧 <input type="range" id="frame" min="1" max="6" step="1" value="1"><output for="frame" data-unit=""></output></label>
+    </div>
+    <div id="visual"></div><p id="result" class="readout" role="status"></p>
+  </div>
+</section>
+<section class="lab-research" id="research"><h2>原理与研究练习</h2>
+  <p>交换机从源 MAC 学习，对目的 MAC 查表。已知目的端口时可以定向转发；目的未知时在同一 VLAN 中向除入端口外的其他端口泛洪。实验用 A 至 E 代替 MAC 地址，省略地址老化、生成树、多交换机和标签封装。第 6 帧演示同一张物理交换机上的两个广播域，跨 VLAN 交付通常要经过三层转发。</p>
+  <p>试着交换第 2 帧与第 3 帧的顺序，再预测泛洪次数。到上一层的 IPv4 实验时，查表键从 MAC 地址变为目的 IP 前缀。两级查表可以同时出现在同一次通信中。</p>
+  <p class="sources"><a href="https://www.ieee802.org/1/pages/802.1Q.html">IEEE 802.1Q · 桥接网络与 VLAN</a></p>
+</section>
+</main>
+<footer><a href="../#network">返回实验目录</a><a href="../network-basics/">回看网络基础</a><a href="../packet-forwarding/">下一项 · IPv4 转发</a></footer>
+</body>
+</html>

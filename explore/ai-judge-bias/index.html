@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="保留答案内容，互换展示位置，比较胜负翻转、自动复核覆盖率与人工基准。">
+<title>把答案调换顺序，评审还会选同一个吗？ · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/ai-judge-bias/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><link rel="stylesheet" href="../systems-labs/labs.css">
+<script type="module" src="../systems-labs/app.mjs"></script>
+</head>
+<body class="lab security-lab" data-lab="ai-judge-bias">
+<header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+<section class="intro"><h1>把答案调换顺序，评审还会选同一个吗？</h1><p class="lead">让一个模型评审两个答案时，把选项 A、B 互换位置，本来应该只改变展示顺序。用一组有人工基准的合成对照，观察评审偏爱第一个选项时，两次结果怎样分歧。</p></section>
+<section class="lab-work" aria-labelledby="lab-title">
+  <h2 id="lab-title">做一次对照</h2><p>把位置偏好从 0 提到 30，看看哪些案例改判。再要求两种顺序结论一致，比较可自动出结论的比例，以及在这些案例上的准确率。</p>
+  <noscript><p class="readout">启用 JavaScript 可操作实验。下面的原理与参考资料仍可阅读。</p></noscript>
+  <div id="experiment" hidden>
+    <div class="lab-controls"><label for="bias">先展示答案的加分 <input type="range" id="bias" min="0" max="55" step="1" value="25"><output for="bias" data-unit=" 分"></output></label>
+      <label><input type="checkbox" id="consensus" checked> 两个顺序结果不一致时转人工</label></div>
+    
+    <div id="visual"></div><p id="result" class="readout" role="status"></p>
+  </div>
+</section>
+<section class="lab-research" id="research"><h2>原理与研究练习</h2><p>每对答案有一个固定质量差，正数偏 A，负数偏 B，零表示平手。评审给首位额外加分。交换位置后按原答案身份比较。两次结果不同可转人工复核。准确率的分母是有自动结论的样本数，覆盖率另行报告。</p><p>位置只是评审偏差的一类。用真实评审模型时，可以随机排列顺序、重复采样并做独立人工标注。换序一致属于稳定性证据；仍要检查双方一致但结论不对的样本。这里的合成读数不能代表实际模型。</p><p class="sources"><a href="https://arxiv.org/abs/2306.05685">Zheng 等 · Judging LLM-as-a-Judge</a></p></section>
+</main>
+<footer><a href="../#security">返回实验目录</a><a href="../ai-safety-eval/">回看上一项相关实验</a><a href="../ai-alignment/">下一项实验</a></footer>
+</body>
+</html>

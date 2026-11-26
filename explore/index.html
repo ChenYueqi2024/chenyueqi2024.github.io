@@ -8,8 +8,8 @@
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://chenyueqi2024.github.io/explore/">
   <title>从现象到研究 · Yueqi</title>
-  <link rel="stylesheet" href="explore.css?v=compact-grid">
-  <script src="search.js" defer></script>
+  <link rel="stylesheet" href="explore.css?v=net-security">
+  <script src="search.js?v=topic-groups" defer></script>
 </head>
 <body>
   <header class="top"><a class="wordmark" href="../">Yueqi<span>.</span></a><a href="../academic/">研究与成长手记</a></header>
@@ -18,11 +18,11 @@
       <h1 id="page-title">从现象<br class="desktop-break">到研究<span>。</span></h1>
       <div>
         <p class="lead">挑一个让你好奇的现象，动手改一个条件。看懂结果后，再去读它怎样用于真实任务，研究者又在尝试解决什么。</p>
-        <div class="intro-actions"><a class="jump" href="#vision">浏览实验目录</a><a class="jump secondary" href="#security">网络与信息安全</a></div>
+        <div class="intro-actions"><a class="jump" href="#vision">浏览实验目录</a><a class="jump secondary" href="#network">计算机网络</a><a class="jump secondary" href="#security">信息安全</a></div>
       </div>
     </section>
     <div class="directory-tools">
-      <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习、生成与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a><a href="#security">网络与信息安全</a></nav>
+      <nav aria-label="按主题浏览"><a href="#vision">视觉几何与图像信号</a><a href="#reliability">模型学习、生成与可靠性</a><a href="#language">语言、检索与证据</a><a href="#practice">研究实践</a><a href="#network">计算机网络</a><a href="#security">信息安全</a></nav>
       <div class="search" hidden>
         <label for="experiment-query">搜索实验或关键词</label>
         <input id="experiment-query" type="search" placeholder="如 SLAM、RL、RAG、AES">
@@ -204,8 +204,8 @@
         </article>
       </div>
     </section>
-    <section class="chapter" id="security" aria-labelledby="security-title">
-      <div class="chapter-heading"><h2 id="security-title">网络与信息安全</h2><p>从网页请求与性能观测出发，理解网络信任边界，再看密码怎样保护通信、验证消息，以及如何在密文上计算。</p></div>
+    <section class="chapter" id="network" aria-labelledby="network-title">
+      <div class="chapter-heading"><h2 id="network-title">计算机网络</h2><p>从打开网页开始，逐层拆解包如何转发、丢失怎么补、路径拥塞时怎样调节发送。</p></div>
       <div class="shelf">
         <article class="tile" data-search="计算机网络 网安 OSI TCP/IP 协议栈 封装 Wi-Fi DHCP DNS ARP 路由 BGP TLS HTTP/2 HTTP/3 QUIC DDoS 网络攻击">
           <img class="catalog-figure" src="illustrations/network-basics.webp" alt="终端、接入点、网关和站点串成请求路径" width="720" height="380" loading="lazy" decoding="async">
@@ -213,6 +213,34 @@
           <h3>打开一个网页，数据会经过哪里？</h3>
           <p>跟着一次请求看设备和协议如何配合，比较 HTTP/2 与 HTTP/3。拆开包看逐跳转发，再根据观测记录排查网络与应用风险。</p>
           <ul class="links"><li><a href="network-basics/">走一遍网页请求</a></li><li><a href="network-basics/#risks">查看风险与防护</a></li><li><a href="network-basics/#diagnosis">练习定位问题</a></li></ul>
+        </article>
+        <article class="tile" data-search="以太网交换机 二层链路 Ethernet MAC VLAN 泛洪 未知单播">
+          <img class="catalog-figure" src="illustrations/ethernet-switching.webp" alt="同一个交换机通过带 VLAN 的端口连接主机，已学习和未学习的帧走向不同" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">以太网交换机</p>
+          <h3>交换机第一次看到这个地址，会把帧送到哪里？</h3>
+          <p>从空的 MAC 地址表回放学习过程，再切换 VLAN，观察未知单播的范围。</p>
+          <ul class="links"><li><a href="ethernet-switching/">打开实验</a></li><li><a href="ethernet-switching/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="CIDR 路由表 子网掩码 最长前缀匹配 IPv4 转发 三条路由都匹配，包会走哪条？ 对比重叠的地址前缀，移除最具体的路由，观察下一跳怎样改变。">
+          <img class="catalog-figure" src="illustrations/packet-forwarding.webp" alt="目的地址同时匹配三个前缀，由最长的匹配前缀决定下一跳" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">IPv4 转发</p>
+          <h3>三条路由都匹配，包会走哪条？</h3>
+          <p>对比重叠的地址前缀，移除最具体的路由，观察下一跳怎样改变。</p>
+          <ul class="links"><li><a href="packet-forwarding/">打开实验</a></li><li><a href="packet-forwarding/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="TCP 滑动窗口 ACK 重传 可靠传输 丢了一段数据，后面几段先到了怎么办？ 逐步回放一组数据段，观察累计 ACK、乱序缓存与超时重传。">
+          <img class="catalog-figure" src="illustrations/reliable-transfer.webp" alt="数据段第二段丢失，接收端先缓存后三段，重传后确认号跳到 6" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">可靠传输</p>
+          <h3>丢了一段数据，后面几段先到了怎么办？</h3>
+          <p>逐步回放一组数据段，观察累计 ACK、乱序缓存与超时重传。</p>
+          <ul class="links"><li><a href="reliable-transfer/">打开实验</a></li><li><a href="reliable-transfer/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="AIMD TCP 排队时延 排队与拥塞控制 发得更多，为什么到得更慢？ 改变瓶颈速率与缓存，比较固定发送和简化 AIMD 的交付量、积压与丢弃。">
+          <img class="catalog-figure" src="illustrations/congestion-queue.webp" alt="同一条瓶颈链路上，固定发送积满队列，反馈控制降低发送量" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">排队与拥塞控制</p>
+          <h3>发得更多，为什么到得更慢？</h3>
+          <p>改变瓶颈速率与缓存，比较固定发送和简化 AIMD 的交付量、积压与丢弃。</p>
+          <ul class="links"><li><a href="congestion-queue/">打开实验</a></li><li><a href="congestion-queue/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="性能 网络瀑布图 Waterfall TTFB 首字节 RTT DNS TCP TLS 缓存 延迟 时延 丢包 带宽 DevTools">
           <img class="catalog-figure" src="illustrations/network-timing.webp" alt="多项网页资源按不同时间点开始和完成" width="720" height="380" loading="lazy" decoding="async">
@@ -228,6 +256,12 @@
           <p>让 DNS 缓存过期，切换 HTTPS 的观测位置，再按访客、学生和运维身份逐层检查访问权限。</p>
           <ul class="links"><li><a href="network-trust/#dns">检查解析结果</a></li><li><a href="network-trust/#tls">看 HTTPS 保护范围</a></li><li><a href="network-trust/#segment">试做网络分段</a></li></ul>
         </article>
+      </div>
+    </section>
+    <section class="chapter" id="security" aria-labelledby="security-title">
+      <div class="chapter-heading"><h2 id="security-title">信息安全</h2><p>从密码原语与系统信任出发，继续追问模型能看到什么、能做什么，以及指标和偏好能说明什么。</p></div>
+      <section class="subtopic" aria-labelledby="security-foundations"><h3 id="security-foundations">密码学与系统信任</h3>
+        <div class="shelf">
         <article class="tile" data-search="密码学 网安 加密 AES GCM RSA OAEP SHA-256 ECDSA 签名 hash 哈希 ChaCha">
           <img class="catalog-figure" src="illustrations/crypto.webp" alt="同一条消息分别变成密文、摘要与签名" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">密码学入门</p>
@@ -249,12 +283,24 @@
           <p>从古典密码、公钥和认证加密，走到 TLS、零信任、供应链和生成式 AI。沿时间线对照攻击方式、信任边界与防护。</p>
           <ul class="links"><li><a href="security-history/">按安全目标浏览</a></li><li><a href="security-history/#research">原理与研究练习</a></li></ul>
         </article>
+        </div>
+      </section>
+      <section class="subtopic" aria-labelledby="security-ai"><h3 id="security-ai">AI Security、AI Safety 与对齐</h3>
+        <p>系统权限和数据保护解决信任边界问题。评估与对齐则关心行为是否可靠、判据是否可信、要优化的目标是否合适。</p>
+        <div class="shelf">
         <article class="tile" data-search="大模型安全 RAG 网安 提示注入 数据投毒 供应链 泄露 输出处理 工具权限 最小权限 agent 智能体 过度代理 授权">
           <img class="catalog-figure" src="illustrations/ai-security.webp" alt="文档经过检索和证据检查，工具操作另由授权关卡判断" width="720" height="380" loading="lazy" decoding="async">
           <p class="topic">大模型安全</p>
           <h3>模型读到了，谁授权它行动？</h3>
           <p>在虚构的 RAG 沙盒中切换身份和前置权限，核对资料能不能读、答案能不能用、操作能不能做。</p>
           <ul class="links"><li><a href="ai-security/">逐层检查权限</a></li><li><a href="ai-security/#lifecycle">看生命周期中的攻击与防护</a></li></ul>
+        </article>
+        <article class="tile" data-search="数据最小化 保留期 LLM 数据隐私 AI Security · 日志与隐私 回答只说了状态，个人资料还可能留在哪？ 用合成请求检查上下文、回复和诊断日志的字段，比较数据最小化、日志白名单与保留期。">
+          <img class="catalog-figure" src="illustrations/ai-data-boundary.webp" alt="同一请求流向模型回复与诊断日志，私有字段分别在不同关卡被拦下" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">AI Security · 日志与隐私</p>
+          <h3>回答只说了状态，个人资料还可能留在哪？</h3>
+          <p>用合成请求检查上下文、回复和诊断日志的字段，比较数据最小化、日志白名单与保留期。</p>
+          <ul class="links"><li><a href="ai-data-boundary/">打开实验</a></li><li><a href="ai-data-boundary/#research">原理与研究练习</a></li></ul>
         </article>
         <article class="tile" data-search="AI Safety 智能体安全评估 大模型评估 Agent TEVV 检索权限 RAG 数据曝光 误拒 越权放行 对照实验">
           <img class="catalog-figure" src="illustrations/ai-safety-eval.webp" alt="三组对照条比较两套策略的曝光、越权和任务完成情况" width="720" height="380" loading="lazy" decoding="async">
@@ -263,7 +309,22 @@
           <p>让两套权限策略处理同一批合成请求。逐案比较上下文曝光、越权放行与正常任务误拒，再换一组请求构成复查比例。</p>
           <ul class="links"><li><a href="ai-safety-eval/">对比两套安全策略</a></li><li><a href="ai-safety-eval/#research">设计评估案例</a></li></ul>
         </article>
-      </div>
+        <article class="tile" data-search="LLM as a judge 换序偏差 自动评审 AI Safety · 评估者偏差 把答案调换顺序，评审还会选同一个吗？ 保留答案内容，互换展示位置，比较胜负翻转、自动复核覆盖率与人工基准。">
+          <img class="catalog-figure" src="illustrations/ai-judge-bias.webp" alt="同一对答案交换先后位置，自动评审可能改选，争议交人工复核" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">AI Safety · 评估者偏差</p>
+          <h3>把答案调换顺序，评审还会选同一个吗？</h3>
+          <p>保留答案内容，互换展示位置，比较胜负翻转、自动复核覆盖率与人工基准。</p>
+          <ul class="links"><li><a href="ai-judge-bias/">打开实验</a></li><li><a href="ai-judge-bias/#research">原理与研究练习</a></li></ul>
+        </article>
+        <article class="tile" data-search="AI 对齐 目标设计 RLHF DPO AI Alignment · 偏好与目标 人类偏好变了，「最好」的回答还一样吗？ 调整两类评审人群的比例，再加一条独立证据底线，比较推荐的回答策略。">
+          <img class="catalog-figure" src="illustrations/ai-alignment.webp" alt="速查和复核人群的评分按比例混合，再由独立证据门槛筛选" width="720" height="380" loading="lazy" decoding="async">
+          <p class="topic">AI Alignment · 偏好与目标</p>
+          <h3>人类偏好变了，「最好」的回答还一样吗？</h3>
+          <p>调整两类评审人群的比例，再加一条独立证据底线，比较推荐的回答策略。</p>
+          <ul class="links"><li><a href="ai-alignment/">打开实验</a></li><li><a href="ai-alignment/#research">原理与研究练习</a></li></ul>
+        </article>
+        </div>
+      </section>
     </section>
   </main>
   <footer><a href="../">回到个人主页</a><a href="https://github.com/ChenYueqi2024">查看 GitHub 项目</a></footer>

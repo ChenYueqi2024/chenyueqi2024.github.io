@@ -1,0 +1,13 @@
+.sim-table {min-width:31rem;margin:8px 0}
+.sim-table .sim-highlight {background:#e5effa}
+.sim-table th {font-weight:700}
+.sim-bits {display:block;font:clamp(.75rem, 3.5vw,1.13rem)/1.7 Consolas,ui-monospace,monospace;overflow-wrap:anywhere}
+.sim-bits strong {color:#215a85;background:#e2eef8}
+.sim-queue {height:125px;display:grid;grid-template-columns:repeat(18,minmax(0,1fr));align-items:stretch;gap:3px;margin:12px 0;border-bottom:2px solid #b4cbd8}
+.sim-queue span {position:relative;min-width:0;display:flex;align-items:flex-end}
+.sim-queue i {display:block;width:100%;min-height:2px;background:#517699}
+.sim-queue .sim-drop {background:#a8552e}
+.sim-queue .sim-focused {outline:2px solid #293846}
+.security-lab .chips li {overflow-wrap:anywhere}
+@media(max-width:680px){.sim-table {font-size:.9rem}}
+

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="调整两类评审人群的比例，再加一条独立证据底线，比较推荐的回答策略。">
+<title>人类偏好变了，「最好」的回答还一样吗？ · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/ai-alignment/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><link rel="stylesheet" href="../systems-labs/labs.css">
+<script type="module" src="../systems-labs/app.mjs"></script>
+</head>
+<body class="lab security-lab" data-lab="ai-alignment">
+<header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+<section class="intro"><h1>人类偏好变了，「最好」的回答还一样吗？</h1><p class="lead">同一份排查建议，有人想快速得到答案，有人要求每一步都有出处。在这个实验里，先用两组人的偏好给候选策略打分，再把证据是否充分作为另一个需要满足的条件。</p></section>
+<section class="lab-work" aria-labelledby="lab-title">
+  <h2 id="lab-title">做一次对照</h2><p>把速查组提高到 90%，看看得分最高的策略是否变化。再启用证据底线，比较高偏好分与高证据通过率会不会选中不同策略。</p>
+  <noscript><p class="readout">启用 JavaScript 可操作实验。下面的原理与参考资料仍可阅读。</p></noscript>
+  <div id="experiment" hidden>
+    <div class="lab-controls"><label for="quick">速查组占比 <input type="range" id="quick" min="0" max="100" step="5" value="50"><output for="quick" data-unit="%"></output></label>
+      <label><input type="checkbox" id="floor"> 证据通过率至少 90%</label></div>
+    
+    <div id="visual"></div><p id="result" class="readout" role="status"></p>
+  </div>
+</section>
+<section class="lab-research" id="research"><h2>原理与研究练习</h2><p>表中偏好分和证据通过率是固定的合成数据。混合偏好分是两组分数的加权平均。可选策略须满足证据底线，然后取最高混合分。本例只做排序和约束对照，未训练模型。</p><p>偏好数据的来源与覆盖会影响模型学到什么。RLHF 可以用偏好学习奖励再优化策略，DPO 从偏好对直接优化模型。是否符合证据、安全和用户意图，仍要用独立判据和留出样本检验。</p><p class="sources"><a href="https://arxiv.org/abs/2203.02155">Ouyang 等 · InstructGPT 与人类反馈</a> · <a href="https://arxiv.org/abs/2305.18290">Rafailov 等 · Direct Preference Optimization</a></p></section>
+</main>
+<footer><a href="../#security">返回实验目录</a><a href="../ai-judge-bias/">回看上一项相关实验</a><a href="/model-mechanics/rl/#reward-design">对照强化学习中的奖励设计</a></footer>
+</body>
+</html>

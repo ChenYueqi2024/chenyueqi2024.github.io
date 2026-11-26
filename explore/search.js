@@ -19,6 +19,9 @@ function search() {
       tile.hidden = !match;
       if (match) matches++;
     }
+    for (const group of section.querySelectorAll('.subtopic')) {
+      group.hidden = !group.querySelector('.tile:not([hidden])');
+    }
     section.hidden = matches === 0;
     shown += matches;
   }

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="用合成请求检查上下文、回复和诊断日志的字段，比较数据最小化、日志白名单与保留期。">
+<title>回答只说了状态，个人资料还可能留在哪？ · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/ai-data-boundary/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><link rel="stylesheet" href="../systems-labs/labs.css">
+<script type="module" src="../systems-labs/app.mjs"></script>
+</head>
+<body class="lab security-lab" data-lab="ai-data-boundary">
+<header class="top"><a class="wordmark" href="../#security">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+<section class="intro"><h1>回答只说了状态，个人资料还可能留在哪？</h1><p class="lead">一个物流助手只需回答包裹的配送状态。用户请求同时带有姓名和联系信息。即使回答只显示物流状态，模型上下文和运维日志也可能继续保有多余资料。</p></section>
+<section class="lab-work" aria-labelledby="lab-title">
+  <h2 id="lab-title">做一次对照</h2><p>先看默认的三个去向，再分别启用「上下文最小化」与「日志白名单」。最后把日志时间拨到保留期之后，检查哪些诊断字段也随日志到期。</p>
+  <noscript><p class="readout">启用 JavaScript 可操作实验。下面的原理与参考资料仍可阅读。</p></noscript>
+  <div id="experiment" hidden>
+    <div class="lab-controls"><label><input type="checkbox" id="minimize"> 上下文只保留任务所需字段</label>
+      <label><input type="checkbox" id="scrub"> 日志使用诊断字段白名单</label>
+      <label for="age">日志已写入 <input type="range" id="age" min="0" max="14" step="1" value="3"><output for="age" data-unit=" 天"></output></label>
+      <label for="ttl">日志保留期 <input type="range" id="ttl" min="1" max="14" step="1" value="7"><output for="ttl" data-unit=" 天"></output></label></div>
+    
+    <div id="visual"></div><p id="result" class="readout" role="status"></p>
+  </div>
+</section>
+<section class="lab-research" id="research"><h2>原理与研究练习</h2><p>所有字段只用合成标签表示。上下文最小化移除与任务无关的姓名和联系方式；运单引用仍供模型处理。日志白名单只保留请求编号、处理结果和耗时。日志保留期从写入时计算，到期后本例的日志记录被删除。</p><p>保留期也影响事后核查能力。真实系统需要逐一盘点外部模型服务、缓存、日志与备份各自的数据去向，验证所设保留期是否在每个环节都执行。</p><p class="sources"><a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">NIST AI 600-1 · 生成式 AI 风险管理</a></p></section>
+</main>
+<footer><a href="../#security">返回实验目录</a><a href="../ai-security/">回看上一项相关实验</a><a href="../ai-safety-eval/">下一项实验</a></footer>
+</body>
+</html>

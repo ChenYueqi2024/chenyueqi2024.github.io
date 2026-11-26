@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="对比重叠的地址前缀，移除最具体的路由，观察下一跳怎样改变。">
+<title>三条路由都匹配，包会走哪条？ · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/packet-forwarding/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><link rel="stylesheet" href="../systems-labs/labs.css">
+<script type="module" src="../systems-labs/app.mjs"></script>
+</head>
+<body class="lab security-lab" data-lab="packet-forwarding">
+<header class="top"><a class="wordmark" href="../#network">从现象到研究<span>.</span></a><a href="#research">原理与研究练习</a></header>
+<main>
+<section class="intro"><h1>三条路由都匹配，包会走哪条？</h1><p class="lead">同一个目的地址可能同时落在几个网段里。在这个虚构园区中，路由器已经有一张转发表。我们只追踪它收到单个 IPv4 包之后的决定。</p></section>
+<section class="lab-work" aria-labelledby="lab-title">
+  <h2 id="lab-title">做一次对照</h2><p>先选择 192.0.2.141，看看它匹配哪些前缀。撤掉 /28 路由，再换到 203.0.113.9，并关闭默认路由。</p>
+  <noscript><p class="readout">启用 JavaScript 可操作实验。下面的原理与参考资料仍可阅读。</p></noscript>
+  <div id="experiment" hidden>
+    <div class="lab-controls"><label for="destination">目的地址 <select id="destination"><option value="192.0.2.141">192.0.2.141 · 靠近实验室</option><option value="192.0.2.178">192.0.2.178 · 园区网</option><option value="192.0.2.21">192.0.2.21 · 校园网</option><option value="198.51.100.8">198.51.100.8 · 校外服务</option><option value="203.0.113.9">203.0.113.9 · 其他网络</option></select></label>
+      <label><input type="checkbox" id="specific" checked> 保留 /28 实验室路由</label>
+      <label><input type="checkbox" id="fallback" checked> 保留默认路由</label></div>
+    
+    <div id="visual"></div><p id="result" class="readout" role="status"></p>
+  </div>
+</section>
+<section class="lab-research" id="research"><h2>原理与研究练习</h2><p>IPv4 地址有 32 位。/28 表示只比较左边 28 位，剩余 4 位可以不同。路由器在匹配项中选前缀最长的一项，/0 匹配任何地址。这里每个前缀只有一条下一跳，省略等价多路径与邻居解析。</p><p>转发是逐包查表，路由协议负责交换和维护可达性。可以固定目的地址，只移除一条表项，检查更具体的前缀缺失时流量如何回到汇总路由。示例使用文档地址，不发网络请求。</p><p class="sources"><a href="https://www.rfc-editor.org/info/rfc1812/">RFC 1812 · IPv4 路由转发</a> · <a href="https://www.rfc-editor.org/rfc/rfc5737.html">RFC 5737 · 文档地址</a></p></section>
+</main>
+<footer><a href="../#network">返回实验目录</a><a href="../ethernet-switching/">回看以太网交换机</a><a href="../reliable-transfer/">下一项实验</a></footer>
+</body>
+</html>

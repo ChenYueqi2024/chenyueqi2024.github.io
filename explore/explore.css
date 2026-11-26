@@ -89,3 +89,9 @@ footer {border-top:1px solid var(--border);border-bottom:0;margin-top:32px;paddi
 }
 
 .catalog-figure{display:block;width:100%;height:auto;aspect-ratio:720/380;border:1px solid #cfddde;border-radius:8px;margin-bottom:11px;background:#edf4f3}
+
+.subtopic + .subtopic {margin-top:20px}
+.subtopic > h3 {font-size:1.13rem;margin:0 0 7px}
+.subtopic > p {margin:0 0 9px;color:var(--muted)}
+#network .tile {border-top-color:#52799f}
+#security .tile {border-top-color:#70568b}
