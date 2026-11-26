@@ -1,0 +1,4 @@
+.dpo-controls label:has(input:disabled) {opacity:.62}
+.dpo-chart {width:100%;max-width:850px;margin:10px 0;border:1px solid var(--border);border-radius:8px}
+.dpo-key {background:#16776a}.rl-key{background:#a44e2a}.target-key{background:#647685}
+

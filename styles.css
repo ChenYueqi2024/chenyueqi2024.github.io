@@ -82,6 +82,10 @@ hr{height:1px;border:0;background:var(--line);margin:32px 0}
 .research-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:64px}
 .research-main{padding-top:8px}
 .research-main p{max-width:660px}
+.research-interests{list-style:none;margin:16px 0 20px;padding:0;display:grid;gap:8px}
+.research-interests li{display:grid;grid-template-columns:7em minmax(0,1fr);gap:4px 16px;background:#edf2f7;border-radius:8px;padding:10px 14px}
+.research-interests strong{color:var(--blue)}
+@media(max-width:500px){.research-interests li{grid-template-columns:1fr}}
 .research-aside{display:flex;flex-direction:column;gap:20px}
 .sealed-note{position:relative;overflow:hidden;background:var(--soft);border:1px solid #d9e5ef;padding:32px;border-radius:4px}
 .sealed-note h3{font-size:1.65rem;margin-bottom:16px}

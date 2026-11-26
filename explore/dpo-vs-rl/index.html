@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="在同一个玩具回答策略上实际对比 DPO 与在线强化学习，核对偏好对、奖励、参考策略和更新曲线。">
+<title>DPO 与在线强化学习 · 从现象到研究</title>
+<link rel="canonical" href="https://chenyueqi2024.github.io/explore/dpo-vs-rl/">
+<link rel="stylesheet" href="../explore.css"><link rel="stylesheet" href="../lab.css"><link rel="stylesheet" href="../security.css"><link rel="stylesheet" href="../security-lessons.css"><link rel="stylesheet" href="dpo.css">
+<script type="module" src="app.mjs"></script>
+</head>
+<body class="lab security-lab">
+<header class="top"><a class="wordmark" href="../#security-ai">从现象到研究<span>.</span></a><a href="#research">推导与研究练习</a></header>
+<main>
+<section class="intro"><h1>有了偏好对，<br class="desktop-break">怎样改变模型策略？</h1><p class="lead">DPO 直接用已有的偏好对更新策略。在线强化学习用当前策略采样回答，再依据奖励更新。让两种方法从同一个参考策略出发，看看反馈一致或冲突时，策略会走向哪里。</p></section>
+<section class="lab-work">
+  <h2>一条提问，两种回答</h2><p>情景是用户询问「为什么同一页面刷新后更快？」策略只有两个动作。A 给出可验证的缓存检查步骤，B 直接给出一个未经核对的结论。实验中的投票与奖励由你设置。</p>
+  <div class="lesson-grid">
+    <article class="lesson-card"><h3>A · 先核对再判断</h3><p>「看开发者工具：重复请求有没有命中缓存？如果两次都下载了资源，再比较连接是否复用。」</p></article>
+    <article class="lesson-card"><h3>B · 直接下结论</h3><p>「肯定是浏览器缓存，所以刷新就会更快。」</p></article>
+  </div>
+  <p>两侧都用单个 logit 表示选择 A 的概率，并从同一参考策略开始。DPO 每步用固定的 20 条偏好标签；在线强化学习每步从当前策略采样 12 个回答。这些步数用来观察更新过程。</p>
+</section>
+<section class="lab-work" id="compare">
+  <h2>把两种反馈放在同一张图上</h2><p>先保留「从偏好推导奖励差」，看看两条训练轨迹是否朝同一个理论最优值移动。再关闭它，把在线奖励差改成负值，观察两个目标怎样分开。</p>
+  <noscript><p class="readout">启用 JavaScript 可逐步训练。下方的公式和研究练习仍可读。</p></noscript>
+  <div id="experiment" hidden>
+    <div class="lesson-control-grid dpo-controls">
+      <label for="reference">参考策略选 A <output for="reference" data-unit="%"></output><input id="reference" type="range" min="10" max="90" step="5" value="50"></label>
+      <label for="votes">20 条偏好中选 A <output for="votes" data-unit=" 条"></output><input id="votes" type="range" min="1" max="19" step="1" value="16"></label>
+      <label for="beta">β（参考约束） <output for="beta" data-unit=""></output><input id="beta" type="range" min="0.2" max="2" step="0.1" value="0.7"></label>
+      <label for="gap">在线奖励差 A − B <output id="gap-value" for="gap"></output><input id="gap" type="range" min="-2.5" max="2.5" step="0.1" value="1.4"></label>
+      <label for="step">训练回放 <output for="step" data-unit=" 步"></output><input id="step" type="range" min="0" max="60" step="1" value="0"></label>
+    </div>
+    <div class="lab-controls"><label><input id="matched" type="checkbox" checked> 从偏好推导匹配的奖励差</label>
+      <label for="seed">RL 采样种子 <select id="seed"><option>42</option><option>127</option><option>408</option></select></label></div>
+    <div class="lab-actions" aria-label="训练控制"><button id="one" type="button">更新一步</button><button id="ten" type="button">更新十步</button><button id="reset" type="button">回到初始策略</button></div>
+    <ul class="lesson-chips" aria-label="图例">
+      <li><span class="legend-key dpo-key"></span>DPO</li><li><span class="legend-key rl-key"></span>在线策略梯度</li><li><span class="legend-key target-key"></span>细虚线 · 理论最优</li>
+    </ul>
+    <canvas id="trajectory" class="dpo-chart" role="img" aria-label="两种方法每次更新后选择回答 A 的概率，精确读数在图下方。"></canvas>
+    <div class="lesson-grid">
+      <article class="lesson-card"><h3>DPO</h3><p id="dpo-readout"></p><p class="lesson-muted" id="dpo-update"></p></article>
+      <article class="lesson-card"><h3>在线策略梯度（RL）</h3><p id="rl-readout"></p><p class="lesson-muted" id="rl-update"></p></article>
+    </div>
+    <p id="status" class="readout" role="status"></p>
+  </div>
+</section>
+<section class="lab-work" aria-labelledby="mechanism">
+  <h2 id="mechanism">两种方法究竟优化什么？</h2>
+  <div class="lesson-grid">
+    <article class="lesson-card"><h3>DPO · 对偏好标签做分类</h3><p>设 <var>θ</var> 为策略给 A、B 的对数概率比，<var>θ₀</var> 为参考策略的比值。DPO 用 <code>σ(β × (θ − θ₀))</code> 预测一条标签偏好 A 的概率，对固定标签做交叉熵最小化。步进面板显示这一次更新前的预测和梯度。</p></article>
+    <article class="lesson-card"><h3>在线 RL · 依据新采样的奖励调整策略</h3><p>每一步从当前策略抽样，以 REINFORCE 估计奖励项的梯度，再扣掉 <code>β × KL(当前策略‖参考策略)</code> 的梯度。这里将在线奖励设为 A 得 <code>Δr/2</code>、B 得 <code>−Δr/2</code>，用 0 作为奖励基线。</p></article>
+  </div>
+  <p>若偏好比例 <var>q</var> 来自 Bradley–Terry 模型，且 <code>q = σ(Δr)</code>，则两种目标在本例的最优对数概率比都是 <code>θ₀ + Δr/β</code>。不匹配时，DPO 的最优值用 <code>log(q/(1−q))</code>，RL 则用设定的奖励差。即使理论最优值相同，有限步更新也会受梯度大小、批量和抽样波动影响。</p>
+</section>
+<section class="lab-research" id="research"><h2>从教学实验到真实后训练</h2>
+  <p>这是一条提问、两个动作的一步任务。实际语言模型会按 token 生成长回答。参考策略的对数概率通常按回答中的 token 累加，在线 RL 也有比这个例子更复杂的采样和优化方法。这里的对照针对 DPO 与在线 REINFORCE，就算图中某条线先走近最优，也不能据此判断算法在真实任务中的优劣。</p>
+  <p>可复现练习：固定偏好和奖励，换三种采样种子，记录同一步骤下的策略概率波动。然后用相同起点制造反馈冲突，另设一套独立的证据标准检查最终策略。这个检查也可接到目录中的「偏好与目标」实验。</p>
+  <p class="sources"><a href="https://arxiv.org/abs/2305.18290">Rafailov 等 · Direct Preference Optimization</a> · <a href="https://doi.org/10.1007/BF00992696">Williams · REINFORCE</a> · <a href="https://arxiv.org/abs/2203.02155">Ouyang 等 · InstructGPT</a></p>
+</section>
+</main>
+<footer><a href="../#security-ai">返回 AI 安全与对齐目录</a><a href="../ai-alignment/">回看偏好与目标</a><a href="/model-mechanics/rl/#reward-design">回到 RL 奖励设计</a></footer>
+</body>
+</html>
